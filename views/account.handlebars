@@ -1,0 +1,83 @@
+<h2 class="page-header whiteColor">Account info</h2>
+
+
+<form class = "name " method ="post" action="/users/account">
+        <div class="form-group form-custom whiteColor capitol">
+            User:
+          </div>
+          <div class="form-group form-custom-string ">
+            <label class="whiteColor">Nume</label>
+            <input type="text" class="form-control login" name="name" placeholder="Name" value={{user.name}}>
+          </div>
+          <div class="form-group form-custom-string ">
+            <label class="whiteColor">Prenume</label>
+            <input type="text" class="form-control login" name="surname" placeholder="Surname" value={{user.surname}}>
+          </div>
+          <div>
+           <button type="submit" class="btn btn-default">Save</button>
+          </div>
+</form>
+
+{{#if display}}
+    <form class = "address" method ="post" action="/users/address">
+          <div class="form-group form-custom whiteColor capitol">
+            Date livrare:
+          </div>
+
+          <div class="form-group form-custom-string ">
+            <label class="whiteColor">Judet</label>
+            <input type="text" class="form-control login" name="county" placeholder="County">
+          </div>
+          <div class="form-group form-custom-string ">
+            <label class="whiteColor">Oras</label>
+            <input type="text" class="form-control login" name="city" placeholder="City">
+          </div>
+          <div class="form-group form-custom-string ">
+            <label class="whiteColor">Strada</label>
+             <input type="text" class="form-control login" name="street" placeholder="Street">
+          </div>
+          <div class="form-group form-custom-number ">
+            <label class="whiteColor">Str.Nr.</label>
+             <input type="text" class="form-control login" name="number" placeholder="Number">
+          </div>
+          <div class="form-group form-custom-number ">
+            <label class="whiteColor">Bloc</label>
+             <input type="text" class="form-control login" name="mansion" placeholder="Mansion">
+          </div>
+          <div class="form-group form-custom-number ">
+            <label class="whiteColor">Scara</label>
+             <input type="text" class="form-control login" name="staircase" placeholder="Staircase">
+          </div>
+          <div class="form-group form-custom-number ">
+            <label class="whiteColor">Etaj</label>
+             <input type="text" class="form-control login" name="floor" placeholder="Floor">
+          </div>
+          <div class="form-group form-custom-number ">
+            <label class="whiteColor">Apartament</label>
+             <input type="text" class="form-control login" name="apartment" placeholder="Apartment">
+          </div>
+          <div class="form-group form-custom-number ">
+            <label class="whiteColor">Telefon</label>
+             <input type="text" class="form-control login" name="phone" placeholder="Phone">
+          </div>
+          <div>
+           <button type="submit" class="btn btn-default">Save</button>
+          </div>
+    </form>
+{{/if}}
+
+
+<form class = "changepassword " method ="post" action="/users/changepassword">
+        <div class="form-group form-custom whiteColor capitol">
+            Modificare parola:
+          </div>
+          <div class="form-group form-custom ">
+            <label class="whiteColor">Parola veche</label>
+            <input type="password" class="form-control login" name="oldpassword" placeholder="Old Password">
+          </div>
+          <div class="form-group form-custom ">
+            <label class="whiteColor">Parola noua</label>
+            <input type="password" class="form-control login" name="newpassword" placeholder="New Password">
+          </div>
+           <button type="submit" class="btn btn-default">Save</button>
+</form>

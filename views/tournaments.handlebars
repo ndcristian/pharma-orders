@@ -1,0 +1,22 @@
+<div class="container-fluid ">
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+        <div class="media text-center" ><img src=/images/logo.png class="logo "></div>
+    </div>
+
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 event-container ">
+        
+            {{#each items}}
+                {{#if this.name}}
+                    <div class="" >
+                        <div class="row  event-detail" >
+                            <div class="col-xs-12 col-sm-12 text-center">
+                              {{this.tournamentName}}
+                            </div>
+                        </div>
+                    </div>      
+                 {{/if}}
+            {{/each}}
+        
+    </div>     
+</div>
+

@@ -1,0 +1,30 @@
+Quick setup — if you’ve done this kind of thing before
+or	
+HTTPS
+SSH
+
+https://github.com/ndcristian/starter.git
+We recommend every repository include a README, LICENSE, and .gitignore.
+
+-----or create a new repository on the command line
+echo "# starter" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/ndcristian/starter.git
+git push -u origin master
+
+-----or push an existing repository from the command line
+git remote add origin https://github.com/ndcristian/starter.git
+git push -u origin master
+
+
+
+------or import code from another repository
+You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
+
+
+-------exclud some repository
+edit cd .git/info/exclude and add:
+    /node_modules/*
+    /package/*

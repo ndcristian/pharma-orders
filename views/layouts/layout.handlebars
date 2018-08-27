@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport"
+  content="width=device-width,user-scalable=no,
+  initial-scale=1,maximum-scale=1,minimum-scale=1">
+
+    <title> BET </title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/jquery-3.1.1.js"></script>
+    
+      {{#if user}}
+          <!-- load custom css or other files -->
+      {{/if}}
+</head>
+<body class="flat">
+<div class="container">
+      
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            {{#if user}}
+                  {{#if (ifMatch user.rol)}}         
+                        <li role="presentation" ><a href="/api/admin" class="whiteColor">Admin</a></li>
+                  {{/if}}
+                 <li role="presentation" ><a href="/teams" class="whiteColor">Teams</a></li>
+                 <li role="presentation" ><a href="/tournaments" class="whiteColor">Ranking</a></li>
+                 <li role="presentation" ><a href="/" class="whiteColor">Bet</a></li>
+                 <li role="presentation" ><a href="/Results" class="whiteColor">Results</a></li>
+                 <li role="presentation" ><a href="/users/logout" class="whiteColor">Logout </a></li>
+                 <li role="presentation" ><a href="/users/account" class="whiteColor">Account</a></li>
+            {{else}}
+                <li role="presentation"><a class="whiteColor" href="/users/login">Login</a></li>
+                <li role="presentation"><a class="whiteColor" href="/users/register">Register</a></li>
+            {{/if}}
+          </ul>
+        </nav>
+        <h3 class="text-muted whiteColor">BetFun</h3>
+      </div>
+            {{#if success_msg}}
+              <div class='alert alert-success'>{{success_msg}}</div>       
+            {{/if}}
+            
+            {{#if error_msg}}
+              <div class='alert alert-danger'>{{error_msg}}</div>       
+            {{/if}}
+            
+            {{#if error}}
+              <div class='alert alert-danger'>{{error}}</div>       
+            {{/if}}
+      
+        {{{body}}}
+   
+     <div class="row">
+        <div class="col-lg-12">
+        </div>  
+     </div>
+
+           <!--   
+            <footer class="footer">
+              <p>&copy; 2017 StarterApp</p>
+            </footer>
+          -->
+</div> <!-- /container -->
+
+</body>
+
+</html>

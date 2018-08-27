@@ -1,0 +1,39 @@
+<div class="container-fluid ">
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+        <div class="media text-center" ><img src=/images/logo.png class="logo "></div>
+    </div>
+  
+<div class="col-xs-12 col-sm-8 col-md-8 col-lg-9 event-container ">
+        {{#each items}}
+            <div class="" >
+                <form name="formBet" method ="post" action="/bet/{{this._id}}">
+                    <div class="row event-detail title " >
+                        <div class="col-xs-6 col-sm-6 text-right "> 
+                            <img src=/images/{{logoNameParser this.team1}}.png class="PictureLeft" height="42" width="42">
+                            <div class="teamName" Name="{{this.team1}}">{{this.team1}}</div>
+                            <img src=/images/{{logoNameParser this.team1}}.png class="PictureRight" height="42" width="42">
+                        </div>
+                        <div class="col-xs-6 col-sm-6 text-left "> 
+                            <img src=/images/{{logoNameParser this.team2}}.png class="" height="42" width="42">
+                            <div class="teamName">{{this.team2}}</div>
+                        </div>
+                    </div>    
+                    <div class="row  event-detail" >
+                        <div class="col-xs-12 col-sm-12 text-center">
+                            <input type="text" class="score" placeholder=" " Name="bet1">
+                            <input type="text" class="score score2" placeholder=" " Name="bet2">
+                            
+                        </div>
+                    </div>
+                    <div class="row  event-detail last-event" >
+                        <div class="col-xs-12 col-sm-12 text-center">
+                            <button type="submit" class="btn btn-default toClick" disabled="disabled">Submit</button>
+                        </div>
+                    </div>   
+                </form>
+            </div>      
+           {{/each}}
+        </div>     
+</div>
+
+<script src="/js/frontend.js"></script>
