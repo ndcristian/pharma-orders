@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var services = require('../routesmodels/services');
-var User = require('../routesmodels/user');
-var project = require('../routesmodels/mainmodels');
+var controls = require('./controls/controls');
+var User = require('./user');
+var project = require('./models/route_models');
 
 // Register
 router.get('/register', function (req, res) {
@@ -101,7 +101,7 @@ passport.deserializeUser(function (id, done) {
 
 router.post('/login', function (req, res, next) {
     console.log ('req.app', req.app);
-    if (services.checkAlert(req.connection.remoteAddress, false)) {
+    if (controls.checkAlert(req.connection.remoteAddress, false)) {
         res.status(404).end();
         console.log('A IESIT din check alert');
     } else {
@@ -110,7 +110,7 @@ router.post('/login', function (req, res, next) {
                 return next(err);
             }
             if (!user) {
-                services.last10(req.connection.remoteAddress, false);
+                controls.last10(req.connection.remoteAddress, false);
                 req.flash('error_msg', 'Invalid user or password');
                 return  res.redirect('/users/login');
 
@@ -139,7 +139,7 @@ router.get('/resetpassword', function (req, res) {
 });
 
 router.post('/resetpassword', function (req, res) {
-    if (services.checkAlert(req.connection.remoteAddress, true)) {
+    if (controls.checkAlert(req.connection.remoteAddress, true)) {
         res.status(404).end();
     } else {
         User.getUserByUsername(req.body.username, function (err, user) {
@@ -149,12 +149,12 @@ router.post('/resetpassword', function (req, res) {
             if (!user) {
                 res.render('confirm_reset', {message_reset: 'This email is not registred: ' + req.body.username});
             } else {
-                services.last10(req.connection.remoteAddress, true);
+                controls.last10(req.connection.remoteAddress, true);
                 var password = req.sessionID.substring(2, 8);
                 user.password = password;
                 initUser = {name: user.name, password: password};
                 User.updateUser(user, req.url, function (err, usermodified) {
-                    services.sendMail(initUser, function (err, info) {
+                    controls.sendMail(initUser, function (err, info) {
                         if (err) {
                             req.flash('error_msg', 'Error resset password');
                             res.redirect('/users/login');
@@ -190,6 +190,7 @@ router.post('/changepassword', function (req, res) {
 
 router.get('/account', ensureAuthenticated, function (req, res) {
     var hidden = (project.model.infoLivrare === "not") ? false : true;
+    //var hidden = true;
     delete req.user.password;
     res.render('account', {display: hidden, user: req.user});
 });
