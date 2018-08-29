@@ -9,6 +9,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
+var MongoClient = require('mongodb').MongoClient;
 var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/loginapp');
@@ -80,9 +81,28 @@ app.use('/', routes);
 app.use('/users', users);
 //app.use('/api', api);
 
-
-app.set('port', (process.env.PORT || 3000));
-app.listen(app.get('port'), function(){
-           console.log('Server started on port' + app.get('port'));
+MongoClient.connect('mongodb://localhost', function (err,client){
+  var db = client.db('loginapp');
+   if (err) {
+    console.log(`Failed to connect to the database. ${err.stack}`);
+  }
+  app.locals.db = db;
+  db.collection('users').find().toArray(function(err,res){
+    if (err){
+      console.log('Failed xxx');
+    } else {
+      console.log (res);
+    }
+  });
+  app.set('port', (process.env.PORT || 3000));
+  app.listen(app.get('port'), function(){
+  console.log('Server started on port' + app.get('port'));
+  
  });
+});
+
+// app.set('port', (process.env.PORT || 3000));
+// app.listen(app.get('port'), function(){
+//            console.log('Server started on port' + app.get('port'));
+//  });
 

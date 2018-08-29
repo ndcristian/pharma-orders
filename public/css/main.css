@@ -1,0 +1,135 @@
+/*
+xs (for phones - screens less than 768px wide)
+sm (for tablets - screens equal to or greater than 768px wide)
+md (for small laptops - screens equal to or greater than 992px wide)
+lg (for laptops and desktops - screens equal to or greater than 1200px wide)
+*/
+
+/* Space out content a bit */
+body {
+    /*padding-top: 20px;*/
+    /*padding-bottom: 20px;*/
+    background-color: #003380;
+}
+.login {
+    background-color: #003380;
+    color:white;
+}
+.whiteColor{
+    color: white;
+}
+a:hover {
+    color: yellow;
+}
+li a:hover {
+    color: blue;
+}
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.media {
+    color:#ffffff;
+    border: 1px solid #d4d4d4;
+    border-radius: 5px  5px 5px 5px;
+    height: 40vh;
+    padding: 8px;
+    margin-bottom: 3px;
+}
+.PictureLeft{
+       display: none;
+    }
+    .logo {
+        height: 90%;
+        width: 90%;
+    }
+@media (max-width: 900px) {
+    .media {
+        /*display: none;*/
+    }
+    .PictureLeft{
+       display: inline-block;
+    }
+    .PictureRight {
+        display: none;
+    }
+    .teamName {
+        display: block !important;
+    }
+}
+.event-container {
+    /*border: 1px solid #d4d4d4;*/
+    /*border-radius: 5px  5px 5px 5px;*/
+    color:white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.event-detail {
+    color:#ffffff;
+    background-color: #336600;
+    border: 1px solid #d4d4d4;
+    border-radius: 5px  5px 5px 5px;
+    padding: 3px;
+    /*font-size: 25px;*/
+    text-align: center;
+    margin:3px;
+    /*min-width: 450px !important;*/
+}
+.title {
+    background-color: #006600;
+    font-size: 15px;
+    font-weight: bolder;
+}
+.last-event {
+    margin-bottom: 25px;
+}
+.bet {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+.score {
+    width: 50px;
+    /*font-size: 25px;*/
+    text-align: center;
+    color:red;
+    border-radius: 5px  5px 5px 5px;
+}
+.score2 {
+    margin-left: 3px; 
+}
+.changePass{
+    float:right;
+}
+.changeIt{
+    float:right;
+}
+.form-custom-string{
+    width: 25%;
+    display: inline-table;
+    min-width: 150px;
+}
+.form-custom-number{
+    width: 10%;
+    display: inline-table;
+    min-width: 50px;
+}
+.hidden {
+ display: none;   
+  
+}
+.address {
+    margin-top: 20px;
+    border-top: solid white 2px;
+}
+.capitol {
+    color: #19f507;
+    font-weight: bolder;
+}
+.changepassword {
+    margin-top: 20px;
+    border-top: solid white 2px;
+    margin-bottom: 100px;
+}
+.teamName {
+    display: inline-block
+}
+button:desabled {
+    background: #ffff00;
+}
