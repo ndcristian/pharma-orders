@@ -13,9 +13,14 @@ router.get('/register', function (req, res) {
 
 // Login
 router.get('/login', function (req, res) {
-    console.log('req-original', req.originalUrl, '----', req.header('x-forwarded-for'));
-    //console.log('req.connection.remoteAddress', req.connection.remoteAddress);
-    //res.setHeader('AuthTime', 333);
+    const db = req.app.locals.db;
+ db.collection('users').find().toArray(function(err,res){
+    if (err){
+      console.log('Failed xxx');
+    } else {
+      console.log (res);
+    }
+  });
     res.render('login');
 });
 

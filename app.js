@@ -87,13 +87,13 @@ MongoClient.connect('mongodb://localhost', function (err,client){
     console.log(`Failed to connect to the database. ${err.stack}`);
   }
   app.locals.db = db;
-  db.collection('users').find().toArray(function(err,res){
-    if (err){
-      console.log('Failed xxx');
-    } else {
-      console.log (res);
-    }
-  });
+//   db.collection('users').find().toArray(function(err,res){
+//     if (err){
+//       console.log('Failed xxx');
+//     } else {
+//       console.log (res);
+//     }
+//   });
   app.set('port', (process.env.PORT || 3000));
   app.listen(app.get('port'), function(){
   console.log('Server started on port' + app.get('port'));
