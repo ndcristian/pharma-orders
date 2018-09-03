@@ -170,7 +170,7 @@ router.post('/resetpassword', function (req, res) {
                 });
             }
         });
-    };
+    }
 });
 
 router.post('/changepassword', function (req, res) {
