@@ -19,6 +19,13 @@ git remote add origin https://github.com/ndcristian/starter.git
 git push -u origin master
 
 
+-------Update the code in your local repo with the changes from other members of your team using the following commands:
+
+fetch , which downloads the changes from your remote repo but does not apply them to your code.
+merge , which applies changes taken from fetch to a branch on your local repo.
+pull , which is a combined command that does a fetch and then a merge.
+
+> git pull
 
 ------or import code from another repository
 You can initialize this repository with code from a Subversion, Mercurial, or TFS project.

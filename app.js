@@ -11,7 +11,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var MongoClient = require('mongodb').MongoClient;
 var mongoose = require('mongoose');
-
+var config = require ("./appconfig");
 mongoose.connect('mongodb://localhost/loginapp');
 var db = mongoose.connection;
 
@@ -21,6 +21,9 @@ var users = require('./routes/users');
 
 // Init App
 var app = express();
+
+// set app configuration
+console.log("App name is : ",config.appName);
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
@@ -73,6 +76,7 @@ app.use(function(req,res, next){
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
+  res.locals.appName = config.appName;
  // console.log(app);
   next();
 });
