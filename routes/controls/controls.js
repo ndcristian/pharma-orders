@@ -9,3 +9,6 @@ module.exports.checkRights = function (userRole, routeRol){
     }
     return check;
 };
+module.exports.checkAlert = function (){
+  return false;
+}

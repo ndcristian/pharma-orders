@@ -5,7 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var controls = require('./controls/controls');
 var User = require('./user');
 var project = require('./models/route_models');
-
+console.log('mesaj din users modul');
 // Register
 router.get('/register', function (req, res) {
     res.render('register');
@@ -13,14 +13,14 @@ router.get('/register', function (req, res) {
 
 // Login
 router.get('/login', function (req, res) {
-    const db = req.app.locals.db;
- db.collection('users').find().toArray(function(err,res){
-    if (err){
-      console.log('Failed xxx');
-    } else {
-      console.log (res);
-    }
-  });
+//  const db = req.app.locals.db;
+//  db.collection('users').find().toArray(function(err,res){
+//     if (err){
+//       console.log('Failed xxx');
+//     } else {
+//       console.log (res);
+//     }
+//   });
     res.render('login');
 });
 
@@ -105,12 +105,13 @@ passport.deserializeUser(function (id, done) {
 //        });
 
 router.post('/login', function (req, res, next) {
-    console.log ('req.app', req.app);
+    console.log ('req.app', req);
     if (controls.checkAlert(req.connection.remoteAddress, false)) {
         res.status(404).end();
         console.log('A IESIT din check alert');
     } else {
         passport.authenticate('local', {failureFlash: true}, function (err, user, info) {
+          console.log ('user in login', user);
             if (err) {
                 return next(err);
             }
@@ -120,12 +121,12 @@ router.post('/login', function (req, res, next) {
                 return  res.redirect('/users/login');
 
             }
-            req.logIn(user, function (err) {
-                if (err) {
-                    return next(err);
-                }
-                return res.redirect('/');
-            });
+//             req.logIn(user, function (err) {
+//                 if (err) {
+//                     return next(err);
+//                 }
+//                 return res.redirect('/');
+//             });
         })(req, res, next);
     }
 

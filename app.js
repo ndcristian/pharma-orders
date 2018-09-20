@@ -27,7 +27,25 @@ console.log("App name is : ",config.appName);
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
+app.engine('handlebars', exphbs({defaultLayout: 'layout',
+      helpers: {
+    ifMatch: function (rol) {
+      if(rol=== "admin" || rol==="creator" ){
+        var showAdmin= true;
+      } else {
+        var showAdmin= false; 
+      }
+      return showAdmin ;
+    },
+    logoNameParser : function (name) {
+        name = name.replace(/ /g,'');
+        name = name.toLowerCase();
+        //console.log('name', name, typeof name);
+        return name;
+    }
+  }
+                          
+}));
 app.set('view engine', 'handlebars');
 
 // BodyParser Middleware
@@ -91,13 +109,7 @@ MongoClient.connect('mongodb://localhost', function (err,client){
     console.log(`Failed to connect to the database. ${err.stack}`);
   }
   app.locals.db = db;
-//   db.collection('users').find().toArray(function(err,res){
-//     if (err){
-//       console.log('Failed xxx');
-//     } else {
-//       console.log (res);
-//     }
-//   });
+
   app.set('port', (process.env.PORT || 3000));
   app.listen(app.get('port'), function(){
   console.log('Server started on port' + app.get('port'));
@@ -105,8 +117,4 @@ MongoClient.connect('mongodb://localhost', function (err,client){
  });
 });
 
-// app.set('port', (process.env.PORT || 3000));
-// app.listen(app.get('port'), function(){
-//            console.log('Server started on port' + app.get('port'));
-//  });
 

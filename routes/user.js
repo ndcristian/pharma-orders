@@ -50,15 +50,18 @@ module.exports.updateUser = function (updateUser, url, callback) {
     }
 };
 module.exports.getUserByUsername = function (email, callback) {
+  console.log("a trecut prin getUserByUserName");
     var query = {email: email};
     User.findOne(query, callback);
 };
 
 module.exports.getUserById = function (id, callback) {
+  console.log("a trecut prin getUserById");
     User.findById(id, callback);
 };
 
 module.exports.comparePassword = function (candidatePassword, hash, callback) {
+  console.log("a trecut prin comparePassword");
     bcrypt.compare(candidatePassword, hash, function (err, isMatch) {
         if (err)
             throw err;
