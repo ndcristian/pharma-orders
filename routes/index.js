@@ -4,7 +4,7 @@ var router = express.Router();
 //Get home page
 router.get('/', function (req, res) {
     
-    res.render('index');
+    res.render('main');
 });
 
 function ensureAuthenticated(req, res, next) {

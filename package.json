@@ -4,7 +4,8 @@
   "description": "Login",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./ node app.js"
   },
   "author": "Cristian Nicolae",
   "license": "ISC",
@@ -25,5 +26,8 @@
     "passport-local": "*",
     "xls-to-json-lc": "^0.3.4",
     "xlsx-to-json-lc": "^0.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
   }
 }

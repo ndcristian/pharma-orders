@@ -30,10 +30,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({defaultLayout: 'layout',
       helpers: {
     ifMatch: function (rol) {
+      var showAdmin;
       if(rol=== "admin" || rol==="creator" ){
-        var showAdmin= true;
+         showAdmin= true;
       } else {
-        var showAdmin= false; 
+         showAdmin= false; 
       }
       return showAdmin ;
     },
