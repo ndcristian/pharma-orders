@@ -21,6 +21,7 @@ router.get('/login', function (req, res) {
 //       console.log (res);
 //     }
 //   });
+  
     res.render('login');
 });
 
@@ -105,7 +106,7 @@ passport.deserializeUser(function (id, done) {
 //        });
 
 router.post('/login', function (req, res, next) {
-    console.log ('req.app', req);
+    //console.log ('req.app', req);
     if (controls.checkAlert(req.connection.remoteAddress, false)) {
         res.status(404).end();
         console.log('A IESIT din check alert');
@@ -119,18 +120,16 @@ router.post('/login', function (req, res, next) {
                 controls.last10(req.connection.remoteAddress, false);
                 req.flash('error_msg', 'Invalid user or password');
                 return  res.redirect('/users/login');
-
             }
-//             req.logIn(user, function (err) {
-//                 if (err) {
-//                     return next(err);
-//                 }
-//                 return res.redirect('/');
-//             });
+            req.logIn(user, function (err) {
+                if (err) {
+                    return next(err);
+                }
+               // return res.redirect('/');
+              res.render('main');
+            });
         })(req, res, next);
     }
-
-
 });
 
 router.get('/logout', function (req, res) {

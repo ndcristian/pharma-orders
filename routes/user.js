@@ -1,3 +1,4 @@
+var db = require ('./services/db');
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 // User Schema
@@ -26,6 +27,7 @@ var UserSchema = mongoose.Schema({
 
 });
 
+
 var User = module.exports = mongoose.model('users', UserSchema);
 
 module.exports.createUser = function (newUser, callback) {
@@ -51,8 +53,10 @@ module.exports.updateUser = function (updateUser, url, callback) {
 };
 module.exports.getUserByUsername = function (email, callback) {
   console.log("a trecut prin getUserByUserName");
-    var query = {email: email};
-    User.findOne(query, callback);
+  var query = {email: email};
+  var database = db.db('loginapp');
+  database.collection('users').find().toArray(callback);
+  //User.findOne(query, callback);
 };
 
 module.exports.getUserById = function (id, callback) {
