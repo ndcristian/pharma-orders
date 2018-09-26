@@ -6,7 +6,10 @@ router.get('/', function (req, res) {
     
     res.render('index');
 });
-
+router.get('/main',ensureAuthenticated, function (req, res) {
+    
+    res.render('main');
+});
 function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
