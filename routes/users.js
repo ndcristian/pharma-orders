@@ -42,7 +42,7 @@ router.post('/register', function(req, res) {
     var newUser = new User({
       name: name,
       surname: surname,
-      rol: 'player',
+      rol: 'root',
       email: email,
       password: password
     });
