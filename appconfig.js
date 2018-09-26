@@ -10,6 +10,7 @@ module.exports= {
     colection_name2:{
       
     }
-  }
-  
-}
+  },
+  url:'url',
+ 
+};
