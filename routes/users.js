@@ -2,10 +2,12 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var controls = require('./controls/controls');
+var services = require('./services/services');
 var User = require('./user');
 var project = require('./models/route_models');
+
 console.log('mesaj din users modul');
+
 // Register
 router.get('/register', function(req, res) {
   res.render('register');
@@ -13,8 +15,14 @@ router.get('/register', function(req, res) {
 
 // Login
 router.get('/login', function(req, res) {
+  // to do: 
+  // i have to store every acces of this route into an array an check every time if 
+  //this route was accesed before and reject the request
 
-  res.render('login');
+  // i have to define in routes models the rights for each route and compare with user right in the routes generator
+  res.render('login', {
+    tries: '3'
+  });
 });
 
 // Register User
@@ -39,13 +47,13 @@ router.post('/register', function(req, res) {
       errors: errors
     });
   } else {
-    var newUser = new User({
+    var newUser = {
       name: name,
       surname: surname,
       rol: 'root',
       email: email,
       password: password
-    });
+    };
 
     User.createUser(newUser, function(err, user) {
       console.log('daca avem eroare');
@@ -72,7 +80,7 @@ passport.use(new LocalStrategy(
           message: 'invalid user or password'
         });
       }
-       console.log('getuserPassportPassword', user.password);
+      console.log('getuserPassportPassword', user.password);
       User.comparePassword(password, user.password, function(err, isMatch) {
         console.log('comparePassword', user);
         if (err)
@@ -106,7 +114,7 @@ passport.deserializeUser(function(id, done) {
 
 router.post('/login', function(req, res, next) {
   //console.log ('req.app', req);
-  if (controls.checkAlert(req.connection.remoteAddress, false)) {
+  if (services.checkAlert(req.connection.remoteAddress, false)) {
     res.status(404).end();
     console.log('A IESIT din check alert');
   } else {
@@ -118,7 +126,7 @@ router.post('/login', function(req, res, next) {
         return next(err);
       }
       if (!user) {
-        controls.last10(req.connection.remoteAddress, false);
+        services.last10(req.connection.remoteAddress, false);
         req.flash('error_msg', 'Invalid user or password');
         return res.redirect('/users/login');
       }
@@ -145,7 +153,7 @@ router.get('/resetpassword', function(req, res) {
 });
 
 router.post('/resetpassword', function(req, res) {
-  if (controls.checkAlert(req.connection.remoteAddress, true)) {
+  if (services.checkAlert(req.connection.remoteAddress, true)) {
     res.status(404).end();
   } else {
     User.getUserByUsername(req.body.username, function(err, user) {
@@ -157,7 +165,7 @@ router.post('/resetpassword', function(req, res) {
           message_reset: 'This email is not registred: ' + req.body.username
         });
       } else {
-        controls.last10(req.connection.remoteAddress, true);
+        services.last10(req.connection.remoteAddress, true);
         var password = req.sessionID.substring(2, 8);
         user.password = password;
         initUser = {
@@ -165,7 +173,7 @@ router.post('/resetpassword', function(req, res) {
           password: password
         };
         User.updateUser(user, req.url, function(err, usermodified) {
-          controls.sendMail(initUser, function(err, info) {
+          services.sendMail(initUser, function(err, info) {
             if (err) {
               req.flash('error_msg', 'Error resset password');
               res.redirect('/users/login');
@@ -181,7 +189,7 @@ router.post('/resetpassword', function(req, res) {
   }
 });
 
-router.post('/changepassword', function(req, res) {
+router.post('/changepassword', ensureAuthenticated, function(req, res) {
   var user = req.user;
   var oldPassword = req.body.oldpassword;
 

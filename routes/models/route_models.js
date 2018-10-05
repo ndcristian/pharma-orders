@@ -5,10 +5,6 @@
  */
 
 module.exports.model = {
-    node_version: "8.6.0",
-    mongodb_version: "3.4.10",
-    infoLivrare:"not",
-    database: "bet",
     routes: {
         matches_get: {
             route: "",
@@ -21,12 +17,12 @@ module.exports.model = {
             },
             template: "index",
             sum: "fieldToSum",
-            rol: "admin/creator/player",
+            rol: "admin/power/normal",
             query: {
                 query: {datastartbet: {$lte: "" + new Date().toISOString() + ""}, datastopbet:{$gte:"" + new Date().toISOString() + ""}},
                 sort: {datastart: 1}
             }
-        },// i have to define query in routemodels for function get_post
+        },
         bets_post: {
             route: "bet",
             type: "post",

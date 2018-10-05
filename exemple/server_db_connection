@@ -1,0 +1,60 @@
+Open a new connection when the Node.js application starts, and reuse the existing db connection object:
+
+/server.js
+import express from 'express';
+import Promise from 'bluebird';
+import logger from 'winston';
+import { MongoClient } from 'mongodb';
+import config from './config';
+import usersRestApi from './api/users';
+
+const app = express();
+
+app.use('/api/users', usersRestApi);
+
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
+// Create a MongoDB connection pool and start the application
+// after the database connection is ready
+MongoClient.connect(config.database.url, { promiseLibrary: Promise }, (err, db) => {
+  if (err) {
+    logger.warn(`Failed to connect to the database. ${err.stack}`);
+  }
+  app.locals.db = db;
+  app.listen(config.port, () => {
+    logger.info(`Node.js app is listening at http://localhost:${config.port}`);
+  });
+});
+
+
+---------------------------------------------------------------------------------
+/api/users.js
+import { Router } from 'express';
+import { ObjectID } from 'mongodb';
+
+const router = new Router();
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const db = req.app.locals.db;
+    const id = new ObjectID(req.params.id);
+    const user = await db.collection('user').findOne({ _id: id }, {
+      email: 1,
+      firstName: 1,
+      lastName: 1
+    });
+
+    if (user) {
+      user.id = req.params.id;
+      res.send(user);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+export default router;

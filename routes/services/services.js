@@ -1,4 +1,4 @@
-
+var last10fails = [];
 // this function parse the project json file and return the propreties of the project
 module.exports.project = function (project) {
     var routeItems = [];
@@ -68,17 +68,24 @@ module.exports.queryparse = function (query, user, queryId) {
     }
 };
 
+
+
+
+
 module.exports.checkRights = function (userRole, routeRol){
     var rights = routeRol.split("/");
     var check = false;
     for (var right of rights){
         console.log('drepturile sunt:' , right );
         if(right===userRole.rol){
-            var check = true;
+            check = true;
         } 
     }
     return check;
 };
+
+
+
 
 module.exports.sendMail = function (user, callback) {
     var nodemailer = require('nodemailer');
@@ -99,3 +106,64 @@ module.exports.sendMail = function (user, callback) {
     };
     transporter.sendMail(mailOptions, callback);
 };
+
+
+
+
+module.exports.checkAlert = function (ip, fromResetPassword) {
+    var founded = false;
+    for (const element of last10fails) {
+        //console.log('Number of fails -----', element.value);
+        if (fromResetPassword) {
+            if (element.ipfail === ip && element.reset > 4) {
+                //console.log('Fails reach maximum -----', element.value);
+                founded = true;
+            }
+        } else {
+            if (element.ipfail === ip && element.value > 4) {
+                //console.log('Fails reach maximum -----', element.value);
+                founded = true;
+            }
+        }
+    }
+    return founded;
+};
+
+
+
+
+module.exports.last10 = function (ip, fromReset) {
+    var founded = false;
+    var index = 0;
+    var added = false;
+    if (last10fails.length >= 10) {
+        for (const element of last10fails) {
+            //console.log('element-', index, element);
+            if (element.ipfail === ip) {
+                founded = true;
+                if (!added) {
+                    last10fails[index].value++;
+                    if (fromReset) {
+                        console.log("Intra in fromReset");
+                        last10fails[index].reset++;
+                        last10fails[index].value = 1;
+                    }
+                }
+            } else {
+                if (!founded && !added) {
+                    added = true;
+                    last10fails.splice(0, 1);
+                    last10fails.push({ipfail: ip, value: 1, reset: 1});
+                }
+            }
+            index++;
+        }
+    } else {
+        last10fails.push({ipfail: ip, value: 1, reset: 1});
+    }
+};
+
+
+
+
+
