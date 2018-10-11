@@ -15,7 +15,7 @@ var appconfig = require("./appconfig");
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var api = require('./routes/routes');
+var api = require('./web/app/routes');
 
 // Init App
 var app = express();

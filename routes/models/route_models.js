@@ -17,10 +17,9 @@ module.exports.model = {
             },
             template: "index",
             sum: "fieldToSum",
-            rol: "admin/power/normal",
+            rol: "root",
             query: {
-                query: {datastartbet: {$lte: "" + new Date().toISOString() + ""}, datastopbet:{$gte:"" + new Date().toISOString() + ""}},
-                sort: {datastart: 1}
+               
             }
         },
         bets_post: {
@@ -36,7 +35,7 @@ module.exports.model = {
             restrictedId: "playerId",
             template: "index",
             sum: "fieldToSum",
-            rol: "admin/creator/player"
+            rol: "root"
         },
         tournaments_get:{
             route: "tournaments",
@@ -51,10 +50,9 @@ module.exports.model = {
             restrictedId: "playerId",
             template: "tournaments",
             sum: "fieldToSum",
-            rol: "admin/creator/player",
+            rol: "root",
             query: {
-                query: {deleted:0},
-                sort: {datastop: -1}
+                
             }
         },
         teams_get:{
@@ -70,8 +68,8 @@ module.exports.model = {
             restrictedId: "",
             template: "teams",
             sum: "fieldToSum",
-            rol: "admin/creator/player",
-            query: {sort: {name: 1}}
+            rol: "root",
+            
         }
     }
 };
