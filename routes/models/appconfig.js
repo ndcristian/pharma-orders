@@ -4,7 +4,7 @@ module.exports = {
   mongodb_version: "3.4.10",
   infoLivrare: "not",
   database: 'loginapp',
-  appName: "server",
+  appName: "react",
   developer: true,
   rolls: ['root', 'admin', 'power', 'normal', 'restricted'],
   emailSubject: this.appName + "send you a message",
