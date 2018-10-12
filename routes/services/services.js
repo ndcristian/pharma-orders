@@ -99,7 +99,7 @@ module.exports.sendMail = function (user, callback) {
     });
     var mailOptions = {
         from: 'etixapp@yahoo.com',
-        to: 'ndcristian@yahoo.co.uk',
+        to: user.email,
         subject: 'BetFun - Password reset',
         text: "Hi " + user.name + 
                 "\n \n Your new password is: " + user.password 

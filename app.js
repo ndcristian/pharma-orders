@@ -9,7 +9,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 //var mongoose = require('mongoose');
-var appconfig = require("./appconfig");
+var appconfig = require("./routes/models/appconfig");
 //mongoose.connect('mongodb://localhost/loginapp');
 //var db = mongoose.connection;
 

@@ -4,7 +4,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var services = require('./services/services');
 var User = require('./user');
-var project = require('./models/route_models');
+var project = require('./models/appconfig');
 
 console.log('mesaj din users modul');
 
@@ -170,7 +170,8 @@ router.post('/resetpassword', function(req, res) {
         user.password = password;
         initUser = {
           name: user.name,
-          password: password
+          password: password,
+          email:user.email
         };
         User.updateUser(user, req.url, function(err, usermodified) {
           services.sendMail(initUser, function(err, info) {
@@ -212,24 +213,26 @@ router.post('/changepassword', ensureAuthenticated, function(req, res) {
 });
 
 router.get('/account', ensureAuthenticated, function(req, res) {
-  var hidden = (project.model.infoLivrare === "not") ? false : true;
+  var toDisplay = (project.infoLivrare === "not") ? false : true;
   //var hidden = true;
   delete req.user.password;
   res.render('account', {
-    display: hidden,
+    display: toDisplay,
     user: req.user
   });
 });
 router.post('/account', ensureAuthenticated, function(req, res) {
   var user = req.user;
   user.name = req.body.name;
-  user.surname = req.body.surmane;
+  user.surname = req.body.surname;
   User.updateUser(user, req.url, function(err, usermodified) {
-    req.flash('success_msg', 'Your data was updated!');
-    res.setHeader('Content-Type', 'application/json');
-    res.redirect({
-      user: user
-    }, '/users/account');
+    if (err){
+      req.flash('error_msg', 'Your data was NOT updated!');
+    } else {
+      req.flash('success_msg', 'Your data was updated!');
+      res.redirect('/users/account');
+    }
+    
   });
 });
 

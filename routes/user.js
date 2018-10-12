@@ -3,7 +3,7 @@ var bcrypt = require('bcryptjs');
 var mongo = require('mongodb');
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
-var url = 'mongodb://localhost/loginapp';
+var dbUrl = 'mongodb://localhost/loginapp';
 // User Schema
 
 // var UserSchema = mongoose.Schema({
@@ -38,7 +38,7 @@ module.exports.createUser = function(newUser, callback) {
     bcrypt.hash(newUser.password, salt, function(err, hash) {
       newUser.password = hash;
 
-      MongoClient.connect(url, function(err, client) {
+      MongoClient.connect(dbUrl, function(err, client) {
         var db = client.db('loginapp');
         db.collection('users').insert(newUser, callback);
       });
@@ -48,18 +48,23 @@ module.exports.createUser = function(newUser, callback) {
     });
   });
 };
-//---------------------------------------------------
+//---------------------------------------------------trebuie sa folosesc updateOne cu id user ca filtru
 module.exports.updateUser = function(updateUser, url, callback) {
   if (url === '/account') {
-    updateUser.save(callback);
+    MongoClient.connect(dbUrl, function(err, client) {
+        var db = client.db('loginapp');
+        db.collection('users').updateOne({_id:ObjectID(updateUser._id)},{ $set: { name:updateUser.name, surname:updateUser.surname }}, callback);
+      }); 
+       
+    //updateUser.save(callback);
   } else {
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(updateUser.password, salt, function(err, hash) {
         updateUser.password = hash;
-        
-         MongoClient.connect(url, function(err, client) {
+        console.log ('url in updateUser', url);
+         MongoClient.connect(dbUrl, function(err, client) {
         var db = client.db('loginapp');
-        db.collection('users').update(newUser, callback);
+        db.collection('users').updateOne({_id:ObjectID(updateUser._id)},{ $set: { password:updateUser.password }}, callback);
       });
        // updateUser.save(callback);
       });
@@ -72,7 +77,7 @@ module.exports.getUserByUsername = function(email, callback) {
   var query = {
     email: email
   };
-  MongoClient.connect(url, function(err, client) {
+  MongoClient.connect(dbUrl, function(err, client) {
     var db = client.db('loginapp');
     db.collection('users').findOne(query, callback);
   });
@@ -84,7 +89,7 @@ module.exports.getUserById = function(id, callback) {
   var query = {
     _id: ObjectID(id),
   };
-  MongoClient.connect(url, function(err, client) {
+  MongoClient.connect(dbUrl, function(err, client) {
     var db = client.db('loginapp');
     db.collection('users').findOne(query, callback);
   });

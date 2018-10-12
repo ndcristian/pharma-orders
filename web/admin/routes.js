@@ -3,20 +3,20 @@
  */
 var express = require('express');
 var router = express.Router();
-var route = require('./models/route_models'); // Project configuration
-var crud = require('./models/crud_models'); //used for GET/INSERT/UPDATE/DELETE
+var route = require('../models/route_models'); // Project configuration
+var crud = require('../models/crud_models'); //used for GET/INSERT/UPDATE/DELETE
 var ObjectID = require('mongodb').ObjectID;
-var controls = require('./controllers/controls'); //Other user functions
+var service = require('../routesmodels/services'); //Other user functions
 //Get home page
 //console.log('created main routes');
 
-var routes = controls.project(route.model.routes);
+var routes = service.project(project.model.routes);
 
 //Generate all routes based on project.json
 routes.forEach(function (route, index) {
     if (route.type === "get") {
         router.get("/" + route.route, ensureAuthenticated, function (req, res) {
-            if (controls.checkRights(req.user, route.rol)) {
+            if (service.checkRights(req.user, route.rol)) {
                 var query = {query: route.query.query, sort: route.query.sort};
                 if (route.restrictedId){
                     query.query[route.restrictedId] = req.user._id.toString();
@@ -32,7 +32,7 @@ routes.forEach(function (route, index) {
             }
         });
         router.get("/" + route.route + "/:" + route.id, ensureAuthenticated, function (req, res) {
-            if (controls.checkRights(req.user, route.rol)) {
+            if (service.checkRights(req.user, route.rol)) {
                 var query = {query: {[route.routeIdField]: req.params[route.routeIdField]}, sort: {}};
                 crud.models[route.model_function](project.model.database, route.collection, query.query, query.sort, function (err, items) {
                     res.setHeader('Content-Type', 'application/json');
@@ -79,7 +79,7 @@ routes.forEach(function (route, index) {
 });
 
 router.get('/admin', ensureAuthenticated, function (req, res) {
-    if (controls.checkRights(req.user, project.apiAdminRouteAccess)) {
+    if (service.checkRights(req.user, project.apiAdminRouteAccess)) {
         //console.log('/admin info user', req.user, project.apiAdminRouteAccess);
         res.render('admin/admin', {layout: false});
     } else {
