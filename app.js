@@ -8,10 +8,8 @@ var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-//var mongoose = require('mongoose');
 var appconfig = require("./routes/models/appconfig");
-//mongoose.connect('mongodb://localhost/loginapp');
-//var db = mongoose.connection;
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -20,33 +18,40 @@ var api = require('./web/app/routes');
 // Init App
 var app = express();
 
-// set app configuration
-
+//react
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
+//optional for react 
+//var options = { beautify: true };
+//app.engine('jsx', require('express-react-views').createEngine(options));
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({
-  defaultLayout: 'layout',
-  helpers: {
-    ifMatch: function(rol) {
-      var showAdmin;
-      if (rol === "admin" || rol === "creator") {
-        showAdmin = true;
-      } else {
-        showAdmin = false;
-      }
-      return showAdmin;
-    },
-    logoNameParser: function(name) {
-      name = name.replace(/ /g, '');
-      name = name.toLowerCase();
-      //console.log('name', name, typeof name);
-      return name;
-    }
-  }
 
-}));
-app.set('view engine', 'handlebars');
+//handlebars
+// app.engine('handlebars', exphbs({
+//   defaultLayout: 'layout',
+//   helpers: {
+//     ifMatch: function(rol) {
+//       var showAdmin;
+//       if (rol === "admin" || rol === "creator") {
+//         showAdmin = true;
+//       } else {
+//         showAdmin = false;
+//       }
+//       return showAdmin;
+//     },
+//     logoNameParser: function(name) {
+//       name = name.replace(/ /g, '');
+//       name = name.toLowerCase();
+//       //console.log('name', name, typeof name);
+//       return name;
+//     }
+//   }
+
+// }));
+// app.set('view engine', 'handlebars');
 
 // BodyParser Middleware
 app.use(bodyParser.json());
