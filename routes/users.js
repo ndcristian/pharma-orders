@@ -15,14 +15,13 @@ router.get('/register', function(req, res) {
 
 // Login
 router.get('/login', function(req, res) {
+  console.log('mesaj din users login');
   // to do: 
   // i have to store every acces of this route into an array an check every time if 
   //this route was accesed before and reject the request
 
   // i have to define in routes models the rights for each route and compare with user right in the routes generator
-  res.render('login', {
-    tries: '3'
-  });
+  res.render('login', {locals:res.locals});
 });
 
 // Register User

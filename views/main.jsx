@@ -1,11 +1,11 @@
 var React = require('react');
 var DefaultLayout = require('./layouts/default');
 
-class index extends React.Component {
+class main extends React.Component {
   render() {
     return (
       
-        <DefaultLayout >
+        <DefaultLayout locals = {this.props.locals}>
               <div className="container-fluid ">
                 <div className="col-xs-8 col-sm-4 col-md-4 col-lg-3">
                     <div className="media text-center" >
@@ -15,7 +15,7 @@ class index extends React.Component {
                 </div>
 
                 <div className="col-xs-12 col-sm-8 col-md-8 col-lg-9 event-container ">
-                   Your wellcome page  . 
+                   Your main applicatin here
                 </div>     
             </div>
       </DefaultLayout>
@@ -23,4 +23,4 @@ class index extends React.Component {
   }
 }
 
-module.exports = index;
+module.exports = main;
