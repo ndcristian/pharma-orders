@@ -2,7 +2,7 @@
 module.exports = {
   node_version: "8.6.0",
   mongodb_version: "3.4.10",
-  infoLivrare: "not",
+  infoLivrare: "yes",
   database: 'loginapp',
   appName: "NodeReactEngine",
   developer: true,

@@ -15,7 +15,6 @@ router.get('/register', function(req, res) {
 
 // Login
 router.get('/login', function(req, res) {
-  console.log('mesaj din users login');
   // to do: 
   // i have to store every acces of this route into an array an check every time if 
   //this route was accesed before and reject the request
@@ -216,8 +215,7 @@ router.get('/account', ensureAuthenticated, function(req, res) {
   //var hidden = true;
   delete req.user.password;
   res.render('account', {
-    display: toDisplay,
-    user: req.user
+    locals: res.locals,
   });
 });
 router.post('/account', ensureAuthenticated, function(req, res) {
