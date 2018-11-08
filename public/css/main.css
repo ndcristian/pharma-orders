@@ -9,14 +9,14 @@ lg (for laptops and desktops - screens equal to or greater than 1200px wide)
 body {
     /*padding-top: 20px;*/
     /*padding-bottom: 20px;*/
-    background-color: #003380;
+/*     background-color: #003380; */
 }
 .login {
     background-color: #003380;
     color:white;
 }
 .whiteColor{
-    color: white;
+    color: #000099;
 }
 a:hover {
     color: yellow;

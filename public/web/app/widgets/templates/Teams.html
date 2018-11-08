@@ -1,0 +1,25 @@
+<div data-dojo-type="dijit/layout/ContentPane" >
+    <div data-dojo-type="dijit/layout/ContentPane" title="Comanda"  
+         data-dojo-props="region: 'center', doLayout: true, isLayoutContainer: true, persist: true" >
+        <form data-dojo-attach-point="filterForm" data-dojo-type="dijit/form/Form">
+
+            <div data-dojo-type="dijit/form/ComboBox" name="team" style="width:25%";
+                 data-dojo-attach-point='team' class ="layoutFilters"
+                 data-dojo-props="placeHolder:'Team', hasDownArrow: false, pageSize: 15, maxHeight:300, maxLength:25 , required: false,  labelAttr: 'numeprodus', searchAttr: 'numeprodus', selectOnClick: true">
+            </div>
+            <div data-dojo-type="dijit/form/ComboBox" name="country" style="width:25%";
+                 data-dojo-attach-point='country' class ="layoutFilters"
+                 data-dojo-props="placeHolder:'Country', hasDownArrow: false, pageSize: 15, maxHeight:300, maxLength:25 , required: false,  labelAttr: 'numeprodus', searchAttr: 'numeprodus', selectOnClick: true">
+            </div>
+            <div data-dojo-type="dijit/form/ComboBox" name="logo" style="width:25%";
+                 data-dojo-attach-point='logo' class ="layoutFilters"
+                 data-dojo-props="placeHolder:'Logo', hasDownArrow: false, maxHeight:300, required: false,  labelAttr: 'producator', searchAttr: 'producator', selectOnClick: true">
+            </div>
+            <div data-dojo-type="dijit/form/Button" class="button" 
+                 data-dojo-attach-point="btnSave"
+                 data-dojo-props="label:'Add'">
+            </div>
+        </form>
+        <div class="" data-dojo-props="region: 'center'" data-dojo-attach-point="gridplace"></div>
+    </div>
+</div>

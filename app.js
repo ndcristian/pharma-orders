@@ -12,7 +12,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var api = require('./web/app/routes');
+var webApp = require('./web/app/routes');
 
 // Init App
 var app = express();
@@ -106,7 +106,7 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/routes', routes);
+app.use('/api', webApp);
 
 app.set('port', (process.env.PORT || 3000));
 app.listen(app.get('port'), function() {

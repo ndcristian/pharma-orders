@@ -1,0 +1,58 @@
+/**
+ * If you are developing a project that makes use of Dijit widgets, you will probably want to include the two files
+ * below; otherwise, you can remove them. When building for release, Dojo will automatically combine all of your
+ * @imported CSS files into a single file.
+ */
+@import '../../../vendors/dojo/resources/dojo.css';
+@import "../font-awesome470/font-awesome470/css/font-awesome.css";
+@import '../../../vendors/dojo-themes/flat/flat.css';
+/*@import '../../dojo/dojo-themes/claro/claro.css';*/
+@import '../../../vendors/dgrid/css/dgrid.css';
+@import '../../../vendors/dojo-themes/flat/dgrid/flat.css'; 
+/*@import '../../dojo/css/skins/claro.css';*/
+@import 'tournaments.css';
+
+html,
+body {
+    height: 100%;
+    margin: auto;
+    padding: 0;
+    color:blue;
+  }
+
+/*body, div , span, a, li, label , form{
+    background: red !important;
+} */
+
+.hidden {
+    display: none;
+}
+
+.layoutContainer {
+    height: 95%;
+    /*min-width: 745px;*/
+}
+.dgrid .right {
+  text-align: right;
+}
+.dgrid .center {
+  text-align: center;
+}
+.dgrid td {
+    vertical-align: middle;
+}
+.dgrid th {
+    text-align:center !important;
+}
+
+
+/* --------validationTextBox in grid css properties*/
+/*fit TextBox into drig cell*/
+.dgrid .dijitTextBox {
+  width: auto;
+  }
+  /*reduce input padding to make cell height less*/
+.dgrid-input {
+      padding:2px !important;
+}
+/*----------------------*/

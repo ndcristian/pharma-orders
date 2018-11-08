@@ -7,16 +7,9 @@ class main extends React.Component {
       
         <DefaultLayout locals = {this.props.locals}>
               <div className="container-fluid ">
-                <div className="col-xs-8 col-sm-4 col-md-4 col-lg-3">
-                    <div className="media text-center" >
-                        <img src='/images/logo.png' className="logo "></img>
-                      
-                    </div>
-                </div>
+                  <script src="../web/app/appConfig.js"  ></script>
+                  <script src="../vendors/dojo/dojo.js" async ></script>
 
-                <div className="col-xs-12 col-sm-8 col-md-8 col-lg-9 event-container ">
-                   Your main applicatin here
-                </div>     
             </div>
       </DefaultLayout>
     );

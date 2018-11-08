@@ -14,7 +14,7 @@ class index extends React.Component {
                     </div>
                 </div>
 
-                <div className="col-xs-12 col-sm-8 col-md-8 col-lg-9 event-container ">
+                <div className="col-xs-12 col-sm-8 col-md-8 col-lg-9 event-container whiteColor">
                    Your wellcome page  . 
                 </div>     
             </div>

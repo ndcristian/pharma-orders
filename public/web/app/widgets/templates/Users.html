@@ -1,0 +1,29 @@
+<div data-dojo-type="dijit/layout/ContentPane" >
+    <div data-dojo-type="dijit/layout/ContentPane" title="Comanda"  
+         data-dojo-props="region: 'center', doLayout: true, isLayoutContainer: true, persist: true" >
+        <form data-dojo-attach-point="filterForm" data-dojo-type="dijit/form/Form">
+
+            <div data-dojo-type="dijit/form/ComboBox" name="name" style="width:25%";
+                 data-dojo-attach-point='name' class ="layoutFilters"
+                 data-dojo-props="placeHolder:'Name', hasDownArrow: false, pageSize: 15, maxHeight:300, maxLength:25 , required: false,  labelAttr: 'numeprodus', searchAttr: 'numeprodus', selectOnClick: true">
+            </div>
+            <div data-dojo-type="dijit/form/ComboBox" name="surname" style="width:25%";
+                 data-dojo-attach-point='surname' class ="layoutFilters"
+                 data-dojo-props="placeHolder:'Surname', hasDownArrow: false, pageSize: 15, maxHeight:300, maxLength:25 , required: false,  labelAttr: 'numeprodus', searchAttr: 'numeprodus', selectOnClick: true">
+            </div>
+            <div data-dojo-type="dijit/form/ComboBox" name="email" style="width:25%";
+                 data-dojo-attach-point='email' class ="layoutFilters"
+                 data-dojo-props="placeHolder:'Email', hasDownArrow: false, maxHeight:300, required: false,  labelAttr: 'producator', searchAttr: 'producator', selectOnClick: true">
+            </div>
+            <div data-dojo-type="dijit/form/ComboBox" name="rol" style="width:25%";
+                 data-dojo-attach-point='rol' class ="layoutFilters"
+                 data-dojo-props="placeHolder:'Rol', hasDownArrow: false, maxHeight:300, required: false,  labelAttr: 'producator', searchAttr: 'producator', selectOnClick: true">
+            </div>
+            <div data-dojo-type="dijit/form/Button" class="button" 
+                 data-dojo-attach-point="btnSave"
+                 data-dojo-props="label:'Add'">
+            </div>
+        </form>
+        <div class="" data-dojo-props="region: 'center'" data-dojo-attach-point="gridplace"></div>
+    </div>
+</div>

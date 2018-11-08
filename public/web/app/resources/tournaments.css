@@ -1,0 +1,9 @@
+.checkdiv {
+    border: #a3a3c2 solid 1px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+    padding: 5px;
+    display: inline-block;
+    width: 10%;
+    margin-left: 1%;
+}

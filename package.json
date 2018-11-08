@@ -33,5 +33,9 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
+  },
+   "nodemonConfig": {
+    "ignore": ["/home/cabox/workspace/pharma-orders/public/*", "/home/cabox/workspace/pharma-orders/node_modules/*"],
+    "delay": "2500"
   }
 }
