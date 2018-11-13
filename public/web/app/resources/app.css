@@ -3,8 +3,8 @@
  * below; otherwise, you can remove them. When building for release, Dojo will automatically combine all of your
  * @imported CSS files into a single file.
  */
-@import '../../../vendors/dojo/resources/dojo.css';
-@import "../font-awesome470/font-awesome470/css/font-awesome.css";
+@import '../../../../vendors/dojo/resources/dojo.css';
+@import "../../../../vendors/font-awesome470/font-awesome470/css/font-awesome.css";
 @import '../../../vendors/dojo-themes/flat/flat.css';
 /*@import '../../dojo/dojo-themes/claro/claro.css';*/
 @import '../../../vendors/dgrid/css/dgrid.css';

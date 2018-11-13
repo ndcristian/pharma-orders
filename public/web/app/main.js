@@ -10,6 +10,7 @@ define([
     getUser(url, function (res) {
         //cfg["user"] = JSON.parse(res.response)._id;
         //cfg["rol"] = JSON.parse(res.response).rol;
+      
       console.log(res);
         cfg["user"] = JSON.parse(res.response);
         cfg["user"]["password"] = "";

@@ -5,71 +5,22 @@
  */
 
 module.exports.model = {
-    routes: {
-        matches_get: {
-            route: "",
-            type: "get",
-            model_function:"get_get",
-            collection: {
-                main:"match",
-                get:"bets",
-                post:""
-            },
-            template: "index",
-            sum: "fieldToSum",
-            rol: "root",
-            query: {
-               
-            }
-        },
-        bets_post: {
-            route: "bet",
-            type: "post",
-            model_function:"get_post",
-            collection: {
-                main:"match",
-                get:"match",
-                post:"bets"
-            },
-            id:"_id",
-            restrictedId: "playerId",
-            template: "index",
-            sum: "fieldToSum",
-            rol: "root"
-        },
-        tournaments_get:{
-            route: "tournaments",
-            type: "get",
-            model_function:"get",
-            collection: {
-                main:"players",
-                get:"",
-                post:""
-            },
-            id:"_id",
-            restrictedId: "playerId",
-            template: "tournaments",
-            sum: "fieldToSum",
-            rol: "root",
-            query: {
-                
-            }
-        },
-        teams_get:{
-            route: "teams",
-            type: "get",
-            model_function:"get",
-            collection: {
-                main:"teams",
-                get:"",
-                post:""
-            },
-            id:"_id",
-            restrictedId: "",
-            template: "teams",
-            sum: "fieldToSum",
-            rol: "root",
-            
-        }
+  routes: {
+    nomenclator_get: {
+      route: "nomenclator",       // route name
+      type: "get",                // route type GET-POST-DELETE etc
+      model_function: "get",      // function from crud-models
+      collection: {               // about collection 
+        main: "nomenclator",      // first collection from where get data
+        get: "",                  //  used for model_function get-get and is the collection used for the second get
+        post: ""                  // idem like preview but with get-post
+      },
+      template: "",               // used if we have to render  template
+      sum: "fieldToSum",          // a filed to sum
+      rol: "root",                // who can access this route
+      query: {                    // query that can be used in crud_models
+
+      }
     }
+  }
 };

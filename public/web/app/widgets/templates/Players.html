@@ -3,21 +3,15 @@
          data-dojo-props="region: 'center', doLayout: true, isLayoutContainer: true, persist: true">             
         <form data-dojo-attach-point="filterForm" data-dojo-type="dijit/form/Form">
 
-            <div data-dojo-type="dijit/form/ComboBox" name="user" style="width:25%"
-                 data-dojo-attach-point='user' class =""
-                 data-dojo-props="placeHolder:'User', hasDownArrow: false, pageSize: 15, maxHeight:300, maxLength:25 , required: false, selectOnClick: true">
+            <div data-dojo-type="dijit/form/FilteringSelect" name="produse" style="width:25%";
+                 data-dojo-attach-point='produse' class =""
+                 data-dojo-props="placeHolder:'Produse', hasDownArrow: false, maxHeight:300, required: false,  labelAttr: 'denumirearticol', searchAttr: 'denumirearticol', selectOnClick: true">
             </div>
-            <div data-dojo-type="dijit/form/FilteringSelect" name="tournament" style="width:25%";
-                 data-dojo-attach-point='tournament' class =""
-                 data-dojo-props="placeHolder:'Tournament', hasDownArrow: false, maxHeight:300, required: false,  labelAttr: 'name', searchAttr: 'name', selectOnClick: true">
+            <div data-dojo-type="dijit/form/FilteringSelect" name="producator" style="width:25%";
+                 data-dojo-attach-point='producator' class =""
+                 data-dojo-props="placeHolder:'Producator', hasDownArrow: false, maxHeight:300, required: false,  labelAttr: 'denumirearticol', searchAttr: 'denumirearticol', selectOnClick: true">
             </div>
-            <div data-dojo-type="dijit/form/ComboBox" name="info" style="width:25%"
-                 data-dojo-attach-point='info' class =""
-                 data-dojo-props="placeHolder:'Info', hasDownArrow: false, pageSize: 15, maxHeight:300, maxLength:25 , required: false,  labelAttr: 'numeprodus', searchAttr: 'numeprodus', selectOnClick: true">
-            </div>
-            <div data-dojo-type="dijit/form/DateTextBox" name="data" data-dojo-attach-point="data" value="now"
-                 data-dojo-props="placeHolder:'Data', required: false, 'class': 'date' , selectOnClick: true ">
-            </div>
+            
             <div data-dojo-type="dijit/form/Button" class="" 
                  data-dojo-attach-point="btnSave"
                  data-dojo-props="label:'Add'">

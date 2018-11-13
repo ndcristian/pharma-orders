@@ -9,7 +9,7 @@ class login extends React.Component {
               <div className="container-fluid ">
                 <div className="col-xs-4 col-sm-4 col-md-4 col-lg-3">
                     <div className="media text-center" >
-                        <img src='/images/logo.png' className="logo "></img>
+                        <img src='/images/shema.JPG' className="logo "></img>
                     </div>
                 </div>
 

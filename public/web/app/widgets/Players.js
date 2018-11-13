@@ -32,14 +32,14 @@ define([
             // define grid store
             self.store = new dstore.RestTrackableCache({
                 idProperty: '_id',
-                target: self.cfg.apiUrl + "/players/",
+                target: self.cfg.apiUrl + "/nomenclatorAA/",
                 headers: self.cfg.options.headers,
                 useRangeHeaders: true
             });
 
-            self.storeusers = new dstore.RestTrackableCache({
+            self.storeproduse = new dstore.RestTrackableCache({
                 idProperty: '_id',
-                target: self.cfg.apiUrl + "/users/",
+                target: self.cfg.apiUrl + "/nomenclator/produs",
                 headers: self.cfg.options.headers,
                 useRangeHeaders: true
             });
@@ -50,31 +50,21 @@ define([
                 useRangeHeaders: true
             });
 
-            this.tournament.set('store', new DstoreAdapter(self.storetournaments));
+            this.produse.set('store', new DstoreAdapter(self.storeproduse));
 
             // define columns
             var columns = [
-                {field: "name", label: "Name", className: "left", editOnClick: false, //editOn: "click",
+                {field: "denumirearticol", label: "Produs", className: "left", editOnClick: false, //editOn: "click",
                     editorArgs: {
                         style: "width: 100%;"
                     }
                 },
-                {field: "surname", label: "Surname", className: "left", editOnClick: false, //editOn: "click",
+                {field: "grupproducator", label: "Producator", className: "left", editOnClick: false, //editOn: "click",
                     editorArgs: {
                         style: "width: 100%;"
                     }
                 },
-                {field: "email", label: "Email", className: "left", editOnClick: false, //editOn: "click",
-                    editorArgs: {
-                        style: "width: 100%;"
-                    }
-                },
-                {field: "tournamentName", label: "Turneu", className: "left", editOnClick: false, //editOn: "click",
-                    editorArgs: {
-                        style: "width: 100%;"
-                    }
-                },
-                {field: "points", label: "Points", className: "right", editOnClick: false, //editOn: "click",
+                {field: "dci", label: "DCI", className: "left", editOnClick: false, //editOn: "click",
                     editorArgs: {
                         style: "width: 100%;"
                     }
@@ -92,11 +82,12 @@ define([
             ];
 
             //Define grid
-            var filter = {deleted: 0};
+            var filter = {};
             var grid = new dgrid.OnDmdSymmaryResizeHide({
-                collection: self.store.filter(filter),
+                collection: self.store,
                 columns: columns,
-                sort: [{property: "name", descending: false}],
+//                 sort: [{property: "denumirearticol", descending: false}],
+               
                 selectionMode: "single",
                 getBeforePut: false,
                 cellNavigation: false,
@@ -121,8 +112,8 @@ define([
 //            });
 
             grid.on('.field-update button.update:click', function (evt) {
-                var row = grid.row(evt, ).data;
-                console.log("clickUpdate", row, );
+                var row = grid.row(evt ).data;
+                console.log("clickUpdate", row );
                 grid.collection.put(row).then(function (item) {
 
                 });
@@ -142,10 +133,10 @@ define([
                         surname: self.checkUser[0].surname,
                         email: self.checkUser[0].email,
                         playerId: self.checkUser[0]._id,
-                        tournament: self.filterForm.value.tournament,
-                        tournamentName:self.tournament.displayedValue,
+                        tournament: self.filterForm.value.producator,
+                        tournamentName:self.producator.displayedValue,
                         info: self.filterForm.value.info,
-                        creator: self.cfg.user._id,
+                        creator: self.cfg.produs._id,
                         deleted: 0,
                         points: 0
                     }).then(function (item) {
@@ -154,23 +145,13 @@ define([
                     });
                 }
             });
-            self.checkUser = {};
-            this.user.on("blur", function (user) {
-                self.storeusers.get(self.user.value).then(function (user) {
-                    if (user.length > 0) {
-                        console.log(user, user.length);
-                        self.checkUser = user;
-                    } else {
-                        alert('User: "' + self.user.value + '" is not valid');
-                    }
-                });
-            });
+            
 
-            self.tournament.subscribe("/tournaments", function (route) {
+            self.producator.subscribe("/tournaments", function (route) {
                 //console.log(route);
                 self.storetournaments.add(route);
                 //console.log('store tournaments subscribe', self.storetournaments);
-                //self.tournament.set('store', new DstoreAdapter(self.storetournaments));
+                //self.producator.set('store', new DstoreAdapter(self.storetournaments));
             });
 
         } // postCreate

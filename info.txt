@@ -45,6 +45,11 @@ sudo apt-get install apt-transport-https
      //Then
  3.4 sudo apt-get update
  3.5 sudo apt-get install -y mongodb-org
+ 
+ **IF mongod service not start when system starts, then :
+  sudo systemctl enable mongod
+ ** If you want to start mongod service :
+  sudo systemctl enable mongod
      
 4. Copy package.json and then run npm install to install all the dependecies
 

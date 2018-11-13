@@ -9,7 +9,7 @@ module.exports.models = {
     get: function (database, collection, query, sort, callback) {
         MongoClient.connect(url, function (err, client) {
             var db = client.db(database);
-            db.collection(collection).find(query).sort(sort).toArray(callback);
+            db.collection(collection.main).find(query).sort(sort).toArray(callback);
         });
     },
     post: function (database, collection, query, callback) {

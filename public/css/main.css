@@ -6,67 +6,87 @@ lg (for laptops and desktops - screens equal to or greater than 1200px wide)
 */
 
 /* Space out content a bit */
+
 body {
-    /*padding-top: 20px;*/
-    /*padding-bottom: 20px;*/
-/*     background-color: #003380; */
+  margin-left: 45px !important;
+  margin-right: 45px !important;
 }
-.login {
-    background-color: #003380;
-    color:white;
+
+.login {}
+
+.whiteColor {
+  font-size: 120%;
+  color: #808080;
 }
-.whiteColor{
-    color: #000099;
-}
+
 a:hover {
-    color: yellow;
+  color: yellow;
 }
+
 li a:hover {
-    color: blue;
+  color: blue;
 }
+
 .input-25 {
-  width:25%;
+  width: 25%;
 }
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 
+.text-left {
+  font-size: 140%;
+  color: #808080;
+}
 
+.logo {
+  width: 90%;
+  height: 90%;
+}
 
-.changePass{
-    float:right;
+.changePass {
+  float: right;
 }
-.changeIt{
-    float:right;
+
+.changeIt {
+  float: right;
 }
-.form-custom-string{
-    width: 25%;
-    display: inline-table;
-    min-width: 150px;
+
+.form-custom-string {
+  width: 25%;
+  display: inline-table;
+  min-width: 150px;
 }
-.form-custom-number{
-    width: 10%;
-    display: inline-table;
-    min-width: 50px;
+
+.form-custom-number {
+  width: 10%;
+  display: inline-table;
+  min-width: 50px;
 }
+
 .hidden {
- display: none;   
-  
+  display: none;
 }
+
 .address {
-    margin-top: 20px;
-    border-top: solid white 2px;
+  margin-top: 20px;
+  border-top: solid white 2px;
 }
+
 .capitol {
-    color: #19f507;
-    font-weight: bolder;
+  color: #19f507;
+  font-weight: bolder;
 }
+
 .changepassword {
-    margin-top: 20px;
-    border-top: solid white 2px;
-    margin-bottom: 100px;
+  margin-top: 20px;
+  border-top: solid white 2px;
+  margin-bottom: 100px;
 }
+
 .teamName {
-    display: inline-block
+  display: inline-block
 }
+
 button:desabled {
-    background: #ffff00;
+  background: #ffff00;
 }

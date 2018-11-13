@@ -64,7 +64,10 @@ class DefaultLayout extends React.Component {
         console.log('din default.jsx if yes locals is:', locals);
       }
     
-    const headerName = {padding:'10px'};
+    const headerName = {
+      padding:'10px',
+      fontSize :'150%'
+    };
     
     return (
       <html>

@@ -4,7 +4,7 @@ module.exports = {
   mongodb_version: "3.4.10",
   infoLivrare: "yes",
   database: 'loginapp',
-  appName: "NodeReactEngine",
+  appName: "Etix Comenzi",
   developer: true,
   rolls: ['root', 'admin', 'power', 'normal', 'restricted'],
   emailSubject: this.appName + "send you a message",
