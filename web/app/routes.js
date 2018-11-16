@@ -14,7 +14,6 @@ var routes = controls.project(route.model.routes);
 routes.forEach(function(route, index) {
   if (route.type === "get") {
     router.get("/" + route.route, ensureAuthenticated, function(req, res) {
-      console.log ("mesaj din routes get--------------------------------");
       if (controls.checkRights(req.user, route.rol)) {
         var query = {
           query: route.query.query,

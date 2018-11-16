@@ -8,7 +8,7 @@ define([
     "dojo/text!./templates/Layout.html",
     "app/widgets/Matches",
     "app/widgets/Teams",
-    "app/widgets/Players",
+    "app/widgets/Produse",
     "app/widgets/Users",
     "app/widgets/Tournaments",
     "dstore/RequestMemory",
@@ -57,7 +57,7 @@ define([
 
             var players = new Players({
                 cfg: self.cfg,
-                title: "Players"
+                title: "Necesar Produse"
             });
             self.tabContainer.addChild(players);
 
@@ -65,7 +65,7 @@ define([
 
             var tournaments = new Tournaments({
                 cfg: self.cfg,
-                title: "Tournaments"
+                title: "Necesar Producatori"
             });
             self.tabContainer.addChild(tournaments);
 

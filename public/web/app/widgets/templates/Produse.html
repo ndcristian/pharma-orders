@@ -1,0 +1,28 @@
+<div data-dojo-type="dijit/layout/ContentPane" class="">
+    <div class="" data-dojo-type="dijit/layout/ContentPane"
+         data-dojo-props="region: 'center', doLayout: true, isLayoutContainer: true, persist: true">             
+        <form data-dojo-attach-point="filterForm" data-dojo-type="dijit/form/Form">
+
+            <div data-dojo-type="dijit/form/FilteringSelect" name="produse" style="width:25%";
+                 data-dojo-attach-point='produse' class =""
+                 data-dojo-props="placeHolder:'Produse', hasDownArrow: false, maxHeight:300, required: true,  labelAttr: 'denumirearticol',
+                                  searchAttr: 'denumirearticol', selectOnClick: true">
+            </div>
+           <div data-dojo-type="dijit/form/ComboBox" name="producator" style="width:25%"
+                 data-dojo-attach-point='producator' class ="layoutFilters"
+                 data-dojo-props="placeHolder:'Producator', hasDownArrow: false, pageSize: 15, maxHeight:300, maxLength:25 , required: false,
+                                   selectOnClick: true, readOnly:true">
+            </div>
+            <div data-dojo-type="dijit/form/ComboBox" name="cantitate" style="width:25%"
+                 data-dojo-attach-point='cantitate' class ="layoutFilters"
+                 data-dojo-props="placeHolder:'cantitate', hasDownArrow: false, pageSize: 15, maxHeight:300, maxLength:25 , required: true,
+                                   selectOnClick: true">
+            </div>
+            <div data-dojo-type="dijit/form/Button" class="" 
+                 data-dojo-attach-point="btnSave"
+                 data-dojo-props="label:'Add'">
+            </div>
+        </form>
+        <div class="grid-necesar" data-dojo-props="region: 'center'" data-dojo-attach-point="gridplace"></div>
+    </div> 
+</div>

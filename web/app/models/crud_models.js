@@ -15,20 +15,21 @@ module.exports.models = {
     post: function (database, collection, query, callback) {
         MongoClient.connect(url, function (err, client) {
             var db = client.db(database);
-            db.collection(collection).insert(query, callback);
+            db.collection(collection.main).insert(query, callback);
         });
     },
     delete: function (database, collection, query, callback) {
         MongoClient.connect(url, function (err, client) {
             //
             var db = client.db(database);
-            db.collection(collection).remove(query, callback);
+            db.collection(collection.main).remove(query, callback);
         });
     },
     put: function (database, collection, query, update, callback) {
         MongoClient.connect(url, function (err, client) {
             var db = client.db(database);
-            db.collection(collection).updateOne(query, update, callback);
+          console.log('----crud-models PUT query: ',query);
+            db.collection(collection.main).updateOne(query, update, callback);
         });
     },
       // used to get records from one table, add somethings and post the new result into another table
