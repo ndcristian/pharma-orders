@@ -88,6 +88,7 @@ class DefaultLayout extends React.Component {
                
            
             {locals.error_msg.length ?  <div className='alert alert-danger'>{locals.error_msg}</div> : ""}
+            {locals.success_msg.length ?  <div className='alert alert-success'>{locals.success_msg}</div> : ""}
             {this.props.children}
           </div>
         </body>

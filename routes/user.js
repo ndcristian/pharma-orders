@@ -3,35 +3,9 @@ var bcrypt = require('bcryptjs');
 var mongo = require('mongodb');
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
-var dbUrl = 'mongodb://localhost/loginapp';
-// User Schema
+var database = require("./models/appconfig").database;
+var dbUrl = 'mongodb://localhost/' + database;
 
-// var UserSchema = mongoose.Schema({
-//   ids: {
-//     type: 'Number'
-//   },
-//   password: {
-//     type: 'String'
-//   },
-//   email: {
-//     type: 'String',
-//     index: true,
-//     unique: true
-//   },
-//   rol: {
-//     type: 'String'
-//   },
-//   name: {
-//     type: 'String'
-//   },
-//   surname: {
-//     type: 'String'
-//   }
-
-// });
-
-
-// var User = module.exports = mongoose.model('users', UserSchema);
 //----------------------------------------------------
 module.exports.createUser = function(newUser, callback) {
   bcrypt.genSalt(10, function(err, salt) {
@@ -39,12 +13,9 @@ module.exports.createUser = function(newUser, callback) {
       newUser.password = hash;
 
       MongoClient.connect(dbUrl, function(err, client) {
-        var db = client.db('loginapp');
+        var db = client.db(database);
         db.collection('users').insert(newUser, callback);
       });
-
-
-     // newUser.save(callback);
     });
   });
 };
@@ -52,21 +23,34 @@ module.exports.createUser = function(newUser, callback) {
 module.exports.updateUser = function(updateUser, url, callback) {
   if (url === '/account') {
     MongoClient.connect(dbUrl, function(err, client) {
-        var db = client.db('loginapp');
-        db.collection('users').updateOne({_id:ObjectID(updateUser._id)},{ $set: { name:updateUser.name, surname:updateUser.surname }}, callback);
-      }); 
-       
+      var db = client.db(database);
+      db.collection('users').updateOne({
+        _id: ObjectID(updateUser._id)
+      }, {
+        $set: {
+          name: updateUser.name,
+          surname: updateUser.surname
+        }
+      }, callback);
+    });
+
     //updateUser.save(callback);
   } else {
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(updateUser.password, salt, function(err, hash) {
         updateUser.password = hash;
-        console.log ('url in updateUser', url);
-         MongoClient.connect(dbUrl, function(err, client) {
-        var db = client.db('loginapp');
-        db.collection('users').updateOne({_id:ObjectID(updateUser._id)},{ $set: { password:updateUser.password }}, callback);
-      });
-       // updateUser.save(callback);
+        console.log('url in updateUser', url);
+        MongoClient.connect(dbUrl, function(err, client) {
+          var db = client.db(database);
+          db.collection('users').updateOne({
+            _id: ObjectID(updateUser._id)
+          }, {
+            $set: {
+              password: updateUser.password
+            }
+          }, callback);
+        });
+        // updateUser.save(callback);
       });
     });
   }
@@ -78,7 +62,7 @@ module.exports.getUserByUsername = function(email, callback) {
     email: email
   };
   MongoClient.connect(dbUrl, function(err, client) {
-    var db = client.db('loginapp');
+    var db = client.db(database);
     db.collection('users').findOne(query, callback);
   });
   //User.findOne(query, callback);
@@ -90,10 +74,10 @@ module.exports.getUserById = function(id, callback) {
     _id: ObjectID(id),
   };
   MongoClient.connect(dbUrl, function(err, client) {
-    var db = client.db('loginapp');
+    var db = client.db(database);
     db.collection('users').findOne(query, callback);
   });
-  
+
   //User.findById(id, callback);
 };
 //------------------------------------------------------

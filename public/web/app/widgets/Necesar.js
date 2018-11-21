@@ -123,7 +123,7 @@ define([
       var grid = new dgrid.OnDmdSymmaryResizeHide({
         collection: self.store,
         columns: columns,
-        //                 sort: [{property: "denumirearticol", descending: false}],
+        sort: [{property: "produs", descending: false}],
         selectionMode: "single",
         getBeforePut: false,
         cellNavigation: false,

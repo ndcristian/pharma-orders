@@ -18,10 +18,10 @@ module.exports.project = function (project) {
 };
 
 
-// used to parse query. query - res.query. user - res.user queryId - from project and represents the field 
+// used to parse query. query - res.query. user - res.user fieldToFilterUser - from project and represents the field 
 //from database that indicate the user to filter for . If user=admin we don't use filter on userId because 
 // the admin  see all 
-module.exports.queryparse = function (query, user, queryId) {
+module.exports.queryparse = function (query, user, fieldToFilterUser) {
     var queryItems = {query: {}, sort: {}};
     var queryObj = Object.keys(query);
     queryObj.forEach(function (key, value) {
@@ -54,17 +54,17 @@ module.exports.queryparse = function (query, user, queryId) {
 
     });
 // set filter to userId. we return only information that refers to the logged user
-    if (queryId) {
+    if (fieldToFilterUser) {
         if (user.rol === "admin") {
             console.log('queryItems admin', queryItems);
             return queryItems;
         } else {
-            queryItems['query'][queryId] = user._id.toString();
+            queryItems['query'][fieldToFilterUser] = user._id.toString();
             console.log('queryItems not admin', queryItems);
             return queryItems;
         }
     } else {
-        queryItems['query'][queryId] = user._id.toString();
+        queryItems['query'][fieldToFilterUser] = user._id.toString();
         return queryItems;
     }
 };

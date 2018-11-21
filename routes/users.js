@@ -28,6 +28,9 @@ router.post('/register', function(req, res) {
   var name = req.body.name;
   var surname = req.body.surname;
   var email = req.body.email;
+  var cui = req.body.cui;
+  var pl = req.body.pl;
+  var client = req.body.client;
   var password = req.body.password;
   var password2 = req.body.password2;
   //console.log(req.body);
@@ -36,6 +39,9 @@ router.post('/register', function(req, res) {
   req.checkBody('surname', ' Surname is required ').notEmpty();
   req.checkBody('email', ' Email is required ').notEmpty();
   req.checkBody('email', ' Email is required ').isEmail();
+  req.checkBody('cui', ' Cui is required ').notEmpty();
+  req.checkBody('pl', ' PL is required ').notEmpty();
+  req.checkBody('client', ' Client is required ').notEmpty();
   req.checkBody('password', ' Password is required ').notEmpty();
   req.checkBody('password2', ' Password2 is required ').equals(req.body.password);
 
@@ -48,8 +54,11 @@ router.post('/register', function(req, res) {
     var newUser = {
       name: name,
       surname: surname,
-      rol: 'root',
+      rol: 'restricted',
       email: email,
+      cui:cui,
+      pl:pl,
+      client:client,
       password: password
     };
 

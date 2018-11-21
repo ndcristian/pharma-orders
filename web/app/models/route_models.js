@@ -39,11 +39,11 @@ module.exports.model = {
       }
     },
     necesar_get: {
-      route: "necesar",       // route name
+      route: "necesar",           // route name
       type: "get",                // route type GET-POST-DELETE etc
       model_function: "get",      // function from crud-models
       collection: {               // about collection 
-        main: "necesar",      // first collection from where get data
+        main: "necesar",          // first collection from where get data
         get: "",                  //  used for model_function get-get and is the collection used for the second get
         post: ""                  // idem like preview but with get-post
       },
@@ -52,7 +52,8 @@ module.exports.model = {
       rol: "root",                // who can access this route
       query: {                    // query that can be used in crud_models
 
-      }
+      },
+      restictedFiled:""           // this field is used to filter the information from database depending by the user
     },
     necesar_post: {
       route: "necesar",       // route name

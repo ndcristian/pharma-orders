@@ -8,7 +8,7 @@ define([
     "dojo/text!./templates/Layout.html",
     "app/widgets/Matches",
     "app/widgets/Teams",
-    "app/widgets/Produse",
+    "app/widgets/Necesar",
     "app/widgets/Users",
     "app/widgets/Tournaments",
     "dstore/RequestMemory",

@@ -19,6 +19,18 @@ class login extends React.Component {
                     <label className="whiteColor">Email</label>
                     <input type="email" className="form-control" placeholder="Email" name="email"></input>
                   </div>
+                  <div className="form-group form-custom">
+                    <label className="whiteColor">CUI</label>
+                    <input type="text" className="form-control" placeholder="Cod Unic Inregistrare" name="cui"></input>
+                  </div>
+                  <div className="form-group form-custom">
+                    <label className="whiteColor">Punct de lucru</label>
+                    <input type="text" className="form-control" placeholder="Punct de lucru" name="pl"></input>
+                  </div>
+                  <div className="form-group form-custom">
+                    <label className="whiteColor">Client</label>
+                    <input type="text" className="form-control" placeholder="Clinet" name="client"></input>
+                  </div>
                    <div className="form-group form-custom">
                     <label className="whiteColor">Password</label>
                     <input type="password" className="form-control" placeholder="Password" name="password"></input>

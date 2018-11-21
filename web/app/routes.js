@@ -8,18 +8,22 @@ var crud = require('./models/crud_models'); //used for GET/INSERT/UPDATE/DELETE
 var ObjectID = require('mongodb').ObjectID;
 var controls = require('./controllers/controls'); //Other user functions
 var database = require ("../../routes/models/appconfig").database;
+
 var routes = controls.project(route.model.routes);
+
 
 // route generator based on route_models and crud_models
 routes.forEach(function(route, index) {
   if (route.type === "get") {
+    console.log ("----mesaj din routes.js -get route este : ", route);
     router.get("/" + route.route, ensureAuthenticated, function(req, res) {
+      console.log("--- mesaj din routes.js -get controls este : ", controls.queryparse(req.query, req.user,false));
       if (controls.checkRights(req.user, route.rol)) {
         var query = {
           query: route.query.query,
           sort: route.query.sort
         };
-        console.log("mesaj din app/routes - get",query)
+        console.log("mesaj din app/routes - get",query);
         if (route.restrictedId) {
           query.query[route.restrictedId] = req.user._id.toString();
         }
