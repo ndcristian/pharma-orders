@@ -6,7 +6,6 @@ var services = require('./services/services');
 var User = require('./user');
 var project = require('./models/appconfig');
 
-console.log('mesaj din users modul');
 
 // Register
 router.get('/register', function(req, res) {
@@ -63,7 +62,6 @@ router.post('/register', function(req, res) {
     };
 
     User.createUser(newUser, function(err, user) {
-      console.log('daca avem eroare');
       if (err) {
         // throw err;
         req.flash('error_msg', 'User already exists');
@@ -79,7 +77,6 @@ router.post('/register', function(req, res) {
 passport.use(new LocalStrategy(
   function(email, password, done) {
     User.getUserByUsername(email, function(err, user) {
-      console.log('getuserPassport', user);
       if (err)
         throw err;
       if (!user) {
@@ -87,9 +84,8 @@ passport.use(new LocalStrategy(
           message: 'invalid user or password'
         });
       }
-      console.log('getuserPassportPassword', user.password);
+
       User.comparePassword(password, user.password, function(err, isMatch) {
-        console.log('comparePassword', user);
         if (err)
           throw err;
         if (isMatch) {
@@ -123,12 +119,10 @@ router.post('/login', function(req, res, next) {
   //console.log ('req.app', req);
   if (services.checkAlert(req.connection.remoteAddress, false)) {
     res.status(404).end();
-    console.log('A IESIT din check alert');
   } else {
     passport.authenticate('local', {
       failureFlash: true
     }, function(err, user, info) {
-      console.log('user in login', user);
       if (err) {
         return next(err);
       }

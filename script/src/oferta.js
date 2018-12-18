@@ -9,7 +9,7 @@ var db = MongoClient.connect(url);
 //var db = new sqlite3.Database('alumgates.sqlite');
 
 exceltojson({
-  input: "./produse_web_tags.xlsx",
+  input: "./oferte_web.xlsx",
   output: null, //"./oferta.json", // sau null daca nu vrem save in fisier
   sheet: "Sheet1", // specific sheetname inside excel file (if you have multiple sheets)
   noheader: true,
@@ -22,12 +22,12 @@ exceltojson({
     //console.log(result);
     // insert into collection
     console.log("Start inserting....");
-    MongoClient.connect("mongodb://localhost/loginapp", function(err, client) {
+    MongoClient.connect("mongodb://localhost/pharma", function(err, client) {
       if (err) {
         return console.dir(err);
       }
-      var db = client.db('loginapp');
-      var collection = db.collection('produse_tag');
+      var db = client.db('pharma');
+      var collection = db.collection('oferte');
       //console.log(result);
 
       collection.remove({}, function(err, results) {

@@ -6,7 +6,7 @@ var ObjectID = require('mongodb').ObjectID;
 var service = require('../apimodels/services'); //Other user functions
 //Get home page
 var routes = service.project(project.routes);
-console.log('created apiroutes');
+
 //Generate all routes based on project.json
 routes.forEach(function (route, index) {
     if (route.type === "get") {

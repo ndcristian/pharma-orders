@@ -15,18 +15,14 @@ var routes = controls.project(route.model.routes);
 // route generator based on route_models and crud_models
 routes.forEach(function(route, index) {
   if (route.type === "get") {
-    console.log ("----mesaj din routes.js -get route este : ", route);
     router.get("/" + route.route, ensureAuthenticated, function(req, res) {
-      console.log("--- mesaj din routes.js -get controls este : ", controls.queryparse(req.query, req.user,false));
+      console.log("--- app/routes.js -get controls este (pentru ruta) - " +route.route +':::' , controls.queryparse(req.query, req.user));
       if (controls.checkRights(req.user, route.rol)) {
-        var query = {
-          query: route.query.query,
-          sort: route.query.sort
-        };
-        console.log("mesaj din app/routes - get",query);
-        if (route.restrictedId) {
-          query.query[route.restrictedId] = req.user._id.toString();
-        }
+        var query = controls.queryparse(req.query, req.user);
+        console.log("app/routes - get query este(pentru ruta) - " +route.route +':::' ,query);
+//         if (route.restrictedId) {
+//           query.query[route.restrictedId] = req.user._id.toString();
+//         }
         crud.models[route.model_function](database, route.collection, query.query, query.sort, function(err, items) {
           //console.log ('items in ' + route.route +':' ,items),
           res.setHeader('Content-Type', 'application/json');
@@ -38,13 +34,12 @@ routes.forEach(function(route, index) {
       }
     });
     router.get("/" + route.route + "/:" + route.id, ensureAuthenticated, function(req, res) {
+      console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%app/routes REQUEST este', req);
       if (controls.checkRights(req.user, route.rol)) {
-        var query = {
-          query: {
-            [route.routeIdField]: req.params[route.routeIdField]
-          },
-          sort: {}
-        };
+        var query = {};
+            query.query = req.params
+         
+      
         console.log(':******mesaj din app/routes - get/: query este', query);
         crud.models[route.model_function](database, route.collection, query.query, query.sort, function(err, items) {
           res.setHeader('Content-Type', 'application/json');
@@ -112,8 +107,10 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   } else {
-    //req.flash('error_msg', 'You are not logged in');
-    res.redirect('/users/login');
+//     res.setHeader('Content-Type', 'text/html');
+     req.flash('error_msg', 'You are not logged in');
+//     res.redirect('/users/login');
+    res.send({error: 'Not logged in'})
   }
 }
 

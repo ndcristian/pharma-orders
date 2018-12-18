@@ -4,7 +4,7 @@ define([
   "dijit/_TemplatedMixin",
   "dijit/_WidgetsInTemplateMixin",
   "dijit/layout/BorderContainer",
-  "dojo/text!./templates/Necesar.html",
+  "dojo/text!./templates/Comanda.html",
   "dstore/RequestMemory",
   "dstore/legacy/DstoreAdapter",
   "util/dstore",
@@ -40,6 +40,14 @@ define([
         headers: self.cfg.options.headers,
         useRangeHeaders: true
       });
+      
+       self.storeUsers = new dstore.RestTrackable({
+        idProperty: '_id',
+        target: self.cfg.apiUrl + "/users/",
+        filter:{cui:self.cfg.user.cui},
+        headers: self.cfg.options.headers,
+        useRangeHeaders: true
+      });
 
       self.storeProduse = new RequestMemory({
         idProperty: 'itemid',
@@ -47,43 +55,20 @@ define([
         headers: self.cfg.options.headers,
         useRangeHeaders: true
       });
-      self.storeOferte = new dstore.RestTrackableCache({
-        idProperty: 'id',
-        target: self.cfg.apiUrl + "/oferte/",
-        headers: self.cfg.options.headers,
-        useRangeHeaders: true
-      });
+     
       // define form input events 
       this.produse.set('store', new DstoreAdapter(self.storeProduse));
+      this.produse.set('store', new DstoreAdapter(self.storeUsers));
       this.produse.on('change', function(item) {
         if (item) {
-          var itemSelected = this.item;
-          self.producator.set('value', this.item.grupproducator);
-          self.storeOferte.get(itemSelected.denumirearticol).then(function(oferta) {
-            produs.produs = itemSelected.denumirearticol;
-            produs.producator = itemSelected.grupproducator;
-            produs.dci = itemSelected.dci;
-            produs.itemid = itemSelected.itemid;
-            produs.cantitate = 1;
-            produs.oferta = oferta;
-            produs.observatii = "";
-            produs.activ = true;
-          });
+          
         } else {
-          self.producator.set('value', 'Invalid value');
+          
         }
-        self.cantitate.focus();
+        
       });
 
-      this.cantitate.on('KeyPress', function(event) {
-        if (event.code === "Enter") {
-          produs.cantitate = this.value;
-          console.log('produs to insert ', produs)
-          self.btnSave.focus();
-        }
-      });
-
-      this.cantitate.set('pattern', '[0-9]+(\.[0-9]{1,2})?');
+       
 
       // define columns
       var columns = [{
@@ -218,27 +203,7 @@ define([
           //self.grid.set('sort', '_id');
         });
       });
-      this.btnSave.on('click', function() {
-        console.log(self.filterForm.validate());
-        if (Object.keys(produs).length > 0 && self.filterForm.validate()) {
-          produs.cantitate = self.cantitate.value;
-          console.log('produs inserted: ', produs);
-          console.log('Object Key produs', Object.keys(produs))
-          self.grid.collection.add(produs)
-            .then(function(item) {
-              //self.grid.set('sort', 'email');
-              //console.log('self.checkUser', self.checkUser);
-              console.log('btnsaveClick item is: ', item);
-              if (item.error) {
-                alert("You are not Logged in. Press F5 to redirect to login page")
-              }
-            });
-        } else {
-          alert('Formularul este invalid. Va rog verificati datele.')
-        }
-      });
-
-
+     
       self.producator.subscribe("/tournaments", function(route) {
         //console.log(route);
         self.storetournaments.add(route);

@@ -9,20 +9,21 @@ module.exports.models = {
     get: function (database, collection, query, sort, callback) {
         MongoClient.connect(url, function (err, client) {
             var db = client.db(database);
+          console.log('from crud_models query este : ', query);
             db.collection(collection.main).find(query).sort(sort).toArray(callback);
         });
     },
     post: function (database, collection, query, callback) {
         MongoClient.connect(url, function (err, client) {
             var db = client.db(database);
-            db.collection(collection.main).insert(query, callback);
+            db.collection(collection.main).insertOne(query, callback);
         });
     },
     delete: function (database, collection, query, callback) {
         MongoClient.connect(url, function (err, client) {
             //
             var db = client.db(database);
-            db.collection(collection.main).remove(query, callback);
+            db.collection(collection.main).deleteOne(query, callback);
         });
     },
     put: function (database, collection, query, update, callback) {

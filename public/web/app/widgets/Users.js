@@ -73,11 +73,24 @@ define([
                         //pattern: '[0-9]+(\.[0-9]{1,2})?'
                     }
                 },
-
                 {field: "rol", label: "Rol", className: "center", autoSave: true,
                     editorArgs: {
                         selectOnClick: true,
                         pattern: '[A-Za-z]+'
+                    },
+                    editor: ValidationTextBox
+                },
+              {field: "cui", label: "CUI", className: "center", autoSave: true,
+                    editorArgs: {
+                        selectOnClick: true,
+                        //pattern: '[A-Za-z]+'
+                    },
+                    editor: ValidationTextBox
+                },
+              {field: "pl", label: "PunctVanzare", className: "center", autoSave: true,
+                    editorArgs: {
+                        selectOnClick: true,
+                       // pattern: '[A-Za-z]+'
                     },
                     editor: ValidationTextBox
                 },
@@ -127,8 +140,8 @@ define([
             });
 
             grid.on('.field-update button.update:click', function (evt) {
-                var row = grid.row(evt, ).data;
-                console.log("clickUpdate", row, );
+                var row = grid.row(evt).data;
+                console.log("clickUpdate", row);
                 grid.collection.put(row).then(function (item) {
 
                 });

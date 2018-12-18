@@ -13,7 +13,7 @@
 @import '../../../vendors/dojo-themes/flat/dgrid/flat.css';
 /*@import '../../dojo/css/skins/claro.css';*/
 
-@import 'tournaments.css';
+@import 'comanda.css';
 html,
 body {
   height: 100%;
@@ -53,6 +53,28 @@ body {
   text-align: center !important;
 }
 
+.field-produs {
+  width: 25%;
+}
+.field-producator {
+  width: 15%;
+}
+.field-dci {
+  width: 20%;
+  font-size:x-small;
+}
+.field-cantitate {
+  width: 5%;
+}
+.field-observatii{
+  width: 20%;
+}
+.field-delete {
+  width: 5%;
+}
+.field-update {
+  width: 5%;
+}
 /* --------validationTextBox in grid css properties*/
 
 /*fit TextBox into drig cell*/

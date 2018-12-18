@@ -7,7 +7,7 @@ router.get('/', function(req, res) {
   //res.render('index');
 });
 router.get('/main', ensureAuthenticated, function(req, res) {
-  console.log ('From index.js /main res.locals is: ', res.locals);
+  //console.log ('From index.js /main res.locals is: ', res.locals);
   res.render('main', {
     locals: res.locals
   });

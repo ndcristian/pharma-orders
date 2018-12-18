@@ -7,6 +7,14 @@ module.exports = {
   appName: "Etix Comenzi",
   developer: true,
   rolls: ['root', 'admin', 'power', 'normal', 'restricted'],
+  // admin = cel care face comenzi, power= cel care introduce necesar, normal = altii care au acces
+  rol:{
+    root: [],
+    admin:["cui"],
+    power:["cui"],
+    normal:["cui","pl"],
+    restricted:["_id"],
+  },
   emailSubject: this.appName + "send you a message",
   user_model: {
     cui: "0000",

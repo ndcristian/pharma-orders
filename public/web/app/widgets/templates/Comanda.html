@@ -1,0 +1,25 @@
+<div data-dojo-type="dijit/layout/ContentPane" class="">
+    <div class="" data-dojo-type="dijit/layout/ContentPane"
+         data-dojo-props="region: 'center', doLayout: true, isLayoutContainer: true, persist: true">             
+        <form data-dojo-attach-point="filterForm" data-dojo-type="dijit/form/Form" class = "formComanda">
+
+            <div data-dojo-type="dijit/form/FilteringSelect" name="produse" style="width:25%";
+                 data-dojo-attach-point='produse' class =""
+                 data-dojo-props="placeHolder:'Produse', hasDownArrow: false, maxHeight:300, required: true,  labelAttr: 'denumirearticol',
+                                  searchAttr: 'denumirearticol', selectOnClick: true">
+            </div>
+           <div data-dojo-type="dijit/form/FilteringSelect" name="produse" style="width:25%";
+                 data-dojo-attach-point='producator' class =""
+                 data-dojo-props="placeHolder:'Producator', hasDownArrow: false, maxHeight:300, required: true,  labelAttr: 'denumirearticol',
+                                  searchAttr: 'denumirearticol', selectOnClick: true">
+            </div>
+            <div data-dojo-type="dijit/form/FilteringSelect" name="produse" style="width:25%";
+                 data-dojo-attach-point='pos' class =""
+                 data-dojo-props="placeHolder:'Punct Vanzare', hasDownArrow: false, maxHeight:300, required: true,  labelAttr: 'pl',
+                                  searchAttr: 'pl', selectOnClick: true">
+            </div>
+           
+        </form>
+        <div class="grid-necesar" data-dojo-props="region: 'center'" data-dojo-attach-point="gridplace"></div>
+    </div> 
+</div>

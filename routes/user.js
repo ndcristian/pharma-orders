@@ -39,7 +39,6 @@ module.exports.updateUser = function(updateUser, url, callback) {
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(updateUser.password, salt, function(err, hash) {
         updateUser.password = hash;
-        console.log('url in updateUser', url);
         MongoClient.connect(dbUrl, function(err, client) {
           var db = client.db(database);
           db.collection('users').updateOne({
@@ -57,7 +56,6 @@ module.exports.updateUser = function(updateUser, url, callback) {
 };
 //----------------------------------------------------
 module.exports.getUserByUsername = function(email, callback) {
-  console.log("a trecut prin getUserByUserName");
   var query = {
     email: email
   };
@@ -69,7 +67,6 @@ module.exports.getUserByUsername = function(email, callback) {
 };
 //-----------------------------------------------------
 module.exports.getUserById = function(id, callback) {
-  console.log("a trecut prin getUserById");
   var query = {
     _id: ObjectID(id),
   };
@@ -82,7 +79,6 @@ module.exports.getUserById = function(id, callback) {
 };
 //------------------------------------------------------
 module.exports.comparePassword = function(candidatePassword, hash, callback) {
-  console.log("a trecut prin comparePassword", candidatePassword, hash);
   bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
     if (err)
       throw err;
