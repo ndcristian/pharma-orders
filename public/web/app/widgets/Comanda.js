@@ -33,42 +33,19 @@ define([
         pl: self.cfg.user.pl
       };
       console.log('produs: ', produs);
-      // define grid store
-      self.store = new dstore.RestTrackable({
-        idProperty: '_id',
-        target: self.cfg.apiUrl + "/necesar/",
-        headers: self.cfg.options.headers,
-        useRangeHeaders: true
-      });
-      
-       self.storeUsers = new dstore.RestTrackable({
-        idProperty: '_id',
-        target: self.cfg.apiUrl + "/users/",
-        filter:{cui:self.cfg.user.cui},
-        headers: self.cfg.options.headers,
-        useRangeHeaders: true
-      });
 
-      self.storeProduse = new RequestMemory({
-        idProperty: 'itemid',
-        target: self.cfg.apiUrl + "/produse/",
-        headers: self.cfg.options.headers,
-        useRangeHeaders: true
-      });
-     
       // define form input events 
-      this.produse.set('store', new DstoreAdapter(self.storeProduse));
-      this.produse.set('store', new DstoreAdapter(self.storeUsers));
+      this.produse.set('store', new DstoreAdapter(self.cfg.Produse));
+      this.pos.set('store', new DstoreAdapter(self.cfg.Users));
+      this.producator.set('store', new DstoreAdapter(self.cfg.Producatori));
       this.produse.on('change', function(item) {
         if (item) {
-          
-        } else {
-          
-        }
-        
-      });
 
-       
+        } else {
+
+        }
+
+      });
 
       // define columns
       var columns = [{
@@ -157,9 +134,12 @@ define([
       ];
 
       //Define grid
-      var filter = {};
+
       var grid = new dgrid.OnDmdSymmaryResizeHide({
-        collection: self.store.filter({activ:true}),
+        collection: self.cfg.Necesar.filter({
+          activ: true,
+          cui: self.cfg.user.cui
+        }),
         columns: columns,
         sort: [{
           property: "produs",
@@ -170,11 +150,11 @@ define([
         cellNavigation: false,
         noDataMessage: "Nu există date",
         loadingMessage: "Se încarcă ...",
-        pagingLinks: false,
-        pagingTextBox: true,
+        // pagingLinks: false,
+        // pagingTextBox: true,
         firstLastArrows: true,
-        rowsPerPage: 20,
-        pageSizeOptions: [10, 20]
+        //rowsPerPage: 20,
+        // pageSizeOptions: [10, 20]
       }, this.gridplace);
       this.grid = grid;
 
@@ -203,7 +183,7 @@ define([
           //self.grid.set('sort', '_id');
         });
       });
-     
+
       self.producator.subscribe("/tournaments", function(route) {
         //console.log(route);
         self.storetournaments.add(route);

@@ -27,7 +27,7 @@ router.post('/register', function(req, res) {
   var name = req.body.name;
   var surname = req.body.surname;
   var email = req.body.email;
-  var cui = req.body.cui;
+  var cui = +req.body.cui;
   var pl = req.body.pl;
   var client = req.body.client;
   var password = req.body.password;

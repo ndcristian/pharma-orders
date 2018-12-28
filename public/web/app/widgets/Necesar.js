@@ -33,33 +33,15 @@ define([
         pl: self.cfg.user.pl
       };
       console.log('produs: ', produs);
-      // define grid store
-      self.store = new dstore.RestTrackable({
-        idProperty: '_id',
-        target: self.cfg.apiUrl + "/necesar/",
-        headers: self.cfg.options.headers,
-        useRangeHeaders: true
-      });
 
-      self.storeProduse = new RequestMemory({
-        idProperty: 'itemid',
-        target: self.cfg.apiUrl + "/produse/",
-        headers: self.cfg.options.headers,
-        useRangeHeaders: true
-      });
-      self.storeOferte = new dstore.RestTrackableCache({
-        idProperty: 'id',
-        target: self.cfg.apiUrl + "/oferte/",
-        headers: self.cfg.options.headers,
-        useRangeHeaders: true
-      });
+
       // define form input events 
-      this.produse.set('store', new DstoreAdapter(self.storeProduse));
+      this.produse.set('store', new DstoreAdapter(self.cfg.Produse));
       this.produse.on('change', function(item) {
         if (item) {
           var itemSelected = this.item;
           self.producator.set('value', this.item.grupproducator);
-          self.storeOferte.get(itemSelected.denumirearticol).then(function(oferta) {
+          self.cfg.Oferte.get(itemSelected.denumirearticol).then(function(oferta) {
             produs.produs = itemSelected.denumirearticol;
             produs.producator = itemSelected.grupproducator;
             produs.dci = itemSelected.dci;
@@ -174,7 +156,7 @@ define([
       //Define grid
       var filter = {};
       var grid = new dgrid.OnDmdSymmaryResizeHide({
-        collection: self.store.filter({activ:true}),
+        collection: self.cfg.Necesar.filter({activ:true, pl:self.cfg.user.pl}),
         columns: columns,
         sort: [{
           property: "produs",

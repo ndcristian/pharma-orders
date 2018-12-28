@@ -66,7 +66,7 @@ class DefaultLayout extends React.Component {
     
     const headerName = {
       padding:'10px',
-      fontSize :'150%'
+      fontSize :'100%'
     };
     
     return (

@@ -52,6 +52,37 @@ define([
       this.inherited(arguments);
       var self = this;
 
+      self.cfg.Produse = new RequestMemory({
+        idProperty: 'itemid',
+        target: self.cfg.apiUrl + "/produse/",
+        headers: self.cfg.options.headers,
+        useRangeHeaders: true
+      });
+      self.cfg.Oferte = new RequestMemory({
+        idProperty: 'id',
+        target: self.cfg.apiUrl + "/oferte/",
+        headers: self.cfg.options.headers,
+        useRangeHeaders: true
+      });
+      self.cfg.Necesar = new dstore.RestTrackable({
+        idProperty: '_id',
+        target: self.cfg.apiUrl + "/necesar/",
+        headers: self.cfg.options.headers,
+        useRangeHeaders: true
+      });
+      self.cfg.Users = new RequestMemory({
+        idProperty: '_id',
+        target: self.cfg.apiUrl + "/users/?cui=" + (+self.cfg.user.cui),
+        headers: self.cfg.options.headers,
+        useRangeHeaders: true
+      });
+      self.cfg.Producatori = new RequestMemory({
+        idProperty: 'id',
+        target: self.cfg.apiUrl + "/producatori/",
+        headers: self.cfg.options.headers,
+        useRangeHeaders: true
+      });
+
       if (self.cfg.user.rol == "restricted") {
         var players = new Restricted({
           cfg: self.cfg,
@@ -60,25 +91,15 @@ define([
         self.tabContainer.addChild(players);
       }
 
-
-      if (self.cfg.user.rol == "admin" || self.cfg.user.rol == "power" || self.cfg.user.rol == "root" ) {
+      if (self.cfg.user.rol == "admin" || self.cfg.user.rol == "power" || self.cfg.user.rol == "root") {
         var necesar = new Necesar({
           cfg: self.cfg,
           title: "Necesar Produse"
         });
         self.tabContainer.addChild(necesar);
       }
-      
-      
-      console.log("cfg", self.cfg);
 
-//       if (self.cfg.user.rol == "root") {
-//         var users = new Users({
-//           cfg: self.cfg,
-//           title: "Users"
-//         });
-//         self.tabContainer.addChild(users);
-//       }
+      console.log("cfg", self.cfg);
 
       if (self.cfg.user.rol == "admin" || self.cfg.user.rol == "root") {
         var comanda = new Comanda({
@@ -87,8 +108,15 @@ define([
         });
         self.tabContainer.addChild(comanda);
       }
+      
+      if (self.cfg.user.rol == "root") {
+        var users = new Users({
+          cfg: self.cfg,
+          title: "Users"
+        });
+        self.tabContainer.addChild(users);
+      }
 
-     
     } // postCreate
   });
 });

@@ -33,8 +33,9 @@ routes.forEach(function(route, index) {
         res.send(JSON.stringify([]));
       }
     });
-    router.get("/" + route.route + "/:" + route.id, ensureAuthenticated, function(req, res) {
-      console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%app/routes REQUEST este', req);
+   
+    router.get("/" + route.route + "/:" + route.id , ensureAuthenticated, function(req, res) {
+//       console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%app/routes REQUEST este', req);
       if (controls.checkRights(req.user, route.rol)) {
         var query = {};
             query.query = req.params

@@ -56,7 +56,7 @@ module.exports.model = {
 
       },
       restictedFiled:"",
-      id: 'itemid'           // this field is used to filter the information from database depending by the user
+      id: 'cui'           // this field is used to filter the information from database depending by the user
     },
     necesar_post: {
       route: "necesar",       // route name
@@ -89,7 +89,7 @@ module.exports.model = {
       query: {                    // query that can be used in crud_models
 
       },
-      id: 'produs'
+      id:"produs"
     },
     users_get: {
       route: "users",       // route name
@@ -106,7 +106,7 @@ module.exports.model = {
       query: {                    // query that can be used in crud_models
 
       },
-      id: '_id'
+      id: 'cui'
     },
     users_post: {
       route: "users",       // route name
@@ -140,7 +140,7 @@ module.exports.model = {
       query: {                    // query that can be used in crud_models
 
       },
-      id: '_id'
+      id: 'cui'
     }
     
   }
