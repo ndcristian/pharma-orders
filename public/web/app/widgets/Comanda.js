@@ -67,22 +67,40 @@ define([
           }
         },
         {
-          field: "dci",
-          label: "DCI",
-          className: "left",
-          editOnClick: false, //editOn: "click",
+          field: "lastPrice",
+          label: "Pret",
+          className: "right",
+          editOnClick: true, //editOn: "click",
+          autoSave: true,
           editorArgs: {
+            selectOnClick: true,
             style: "width: 100%;"
-          }
+          },
+           editor: Textarea
         },
+          {
+          field: "lastDiscount",
+          label: "Discount",
+          className: "right",
+          autoSave: true,
+          editOnClick: true, //editOn: "click",
+          editorArgs: {
+            selectOnClick: true,
+            style: "width: 100%;"
+          },
+             editor: Textarea
+        },           
         {
           field: "cantitate",
           label: "Cantitate",
           className: "right",
+          autoSave: true,
           editOnClick: false, //editOn: "click",
           editorArgs: {
+            selectOnClick: true,
             style: "width: 100%;"
-          }
+          },
+           editor: Textarea
         },
         {
           field: "observatii",

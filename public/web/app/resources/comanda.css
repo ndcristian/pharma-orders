@@ -3,10 +3,20 @@
 }
 
 .grid-comanda {
-  height: 70%;
+  height: 60%;
 }
 
 .prodInfo {
-  height: 25%;
+  height: 35%;
   border: 1px solid #DDD;
+}
+.field-lastPrice {
+  width: 8%;
+}
+.field-lastDiscount {
+  width: 5%;
+}
+
+.right textarea {
+  text-align:right !important;
 }

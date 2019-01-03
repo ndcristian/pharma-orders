@@ -50,6 +50,10 @@ define([
             produs.oferta = oferta;
             produs.observatii = "";
             produs.activ = true;
+            produs.lastPrice = "";
+            produs.lastDiscount= "";
+            produs.onDemandOffer = [{}];
+            produs.pretDiscount = "";
           });
         } else {
           self.producator.set('value', 'Invalid value');
@@ -205,7 +209,7 @@ define([
         if (Object.keys(produs).length > 0 && self.filterForm.validate()) {
           produs.cantitate = self.cantitate.value;
           console.log('produs inserted: ', produs);
-          console.log('Object Key produs', Object.keys(produs))
+          console.log('Object Key produs', Object.keys(produs));
           self.grid.collection.add(produs)
             .then(function(item) {
               //self.grid.set('sort', 'email');
