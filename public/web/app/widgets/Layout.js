@@ -70,6 +70,12 @@ define([
         headers: self.cfg.options.headers,
         useRangeHeaders: true
       });
+      self.cfg.Comanda = new dstore.RestTrackable({
+        idProperty: '_id',
+        target: self.cfg.apiUrl + "/comanda/",
+        headers: self.cfg.options.headers,
+        useRangeHeaders: true
+      });
       self.cfg.Users = new RequestMemory({
         idProperty: '_id',
         target: self.cfg.apiUrl + "/users/?cui=" + (+self.cfg.user.cui),
