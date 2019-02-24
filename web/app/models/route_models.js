@@ -74,6 +74,40 @@ module.exports.model = {
 
       }
     },
+    comanda_get: {
+      route: "comanda",           // route name
+      type: "get",                // route type GET-POST-DELETE etc
+      model_function: "get",      // function from crud-models
+      collection: {               // about collection 
+        main: "comanda",          // first collection from where get data
+        get: "",                  //  used for model_function get-get and is the collection used for the second get
+        post: ""                  // idem like preview but with get-post
+      },
+      template: "",               // used if we have to render  template
+      sum: "fieldToSum",          // a filed to sum
+      rol: ['root', 'admin', 'power', 'normal'],                // who can access this route
+      query: {                    // query that can be used in crud_models
+
+      },
+      restictedFiled:"",
+      id: 'cui'           // this field is used to filter the information from database depending by the user
+    },
+    comanda_post: {
+      route: "comanda",       // route name
+      type: "post",                // route type GET-POST-DELETE etc
+      model_function: "post",      // function from crud-models
+      collection: {               // about collection 
+        main: "comanda",      // first collection from where get data
+        get: "",                  //  used for model_function get-get and is the collection used for the second get
+        post: ""                  // idem like preview but with get-post
+      },
+      template: "",               // used if we have to render  template
+      sum: "fieldToSum",          // a filed to sum
+      rol: ['root', 'admin', 'power', 'normal'],                // who can access this route
+      query: {                    // query that can be used in crud_models
+
+      }
+    },
     oferte_get: {
       route: "oferte",       // route name
       type: "get",                // route type GET-POST-DELETE etc

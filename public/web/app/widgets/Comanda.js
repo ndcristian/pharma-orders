@@ -154,8 +154,8 @@ define([
       //Define grid
 
       var grid = new dgrid.OnDmdSymmaryResizeHide({
-        collection: self.cfg.Necesar.filter({
-          activ: true,
+        collection: self.cfg.Comanda.filter({
+          //activ: true,
           cui: self.cfg.user.cui
         }),
         columns: columns,

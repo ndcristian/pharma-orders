@@ -32,23 +32,38 @@ define([
         cui: self.cfg.user.cui,
         pl: self.cfg.user.pl
       };
+      let produsInComanda = {};
       console.log('produs: ', produs);
       let produsInOferta = false;
-
+      let totalCantItem = 0;
       // define form input events 
       this.produse.set('store', new DstoreAdapter(self.cfg.Produse));
       this.produse.on('change', function(item) {
+        totalCantItem = 0;
         if (item) {
           var itemSelected = this.item;
           console.log("item", itemSelected);
           self.producator.set('value', this.item.grupproducator);
           self.cfg.Necesar.filter({
             produs: itemSelected.denumirearticol,
-            activ: true,
-            pl: self.cfg.user.pl
-          }).fetch().then(function(oferta) {
-            if (oferta.totalLength > 0) {
-              console.log("Oferta este", oferta);
+            activ: true
+            //pl: self.cfg.user.pl
+          }).fetch().then(function(items) {
+            console.log("Oferta este", items);
+            if (items.totalLength > 0) {
+              items.forEach(function(productsArray) {
+                if (productsArray.pl === self.cfg.user.pl) {
+                  produsInOferta = true;
+                }
+                totalCantItem = totalCantItem + (+productsArray.cantitate);
+                console.log("productsArray", productsArray, totalCantItem);
+              })
+            }
+            
+console.log("produs in oferta", produsInOferta);
+
+            if (produsInOferta) {
+
               alert("Produsul este deja in necesarul farmaciei !");
               produsInOferta = true;
             } else {
@@ -58,13 +73,9 @@ define([
               produs.dci = itemSelected.dci;
               produs.itemid = itemSelected.itemid;
               produs.cantitate = 1;
-              produs.oferta = oferta;
               produs.observatii = "";
               produs.activ = true;
-              produs.lastPrice = "";
-              produs.lastDiscount = "";
-              produs.onDemandOffer = [{}];
-              produs.pretDiscount = "";
+
               produsInOferta = false;
             }
           });
@@ -224,8 +235,10 @@ define([
         console.log(self.filterForm.validate());
         if (Object.keys(produs).length > 0 && self.filterForm.validate() && !produsInOferta) {
           produs.cantitate = self.cantitate.value;
-          console.log('produs inserted: ', produs);
+          totalCantItem = totalCantItem + (+self.cantitate.value);
+          console.log('produs inserted: ', produs, "totalCantItem", totalCantItem);
           console.log('Object Key produs', Object.keys(produs));
+
           self.grid.collection.add(produs)
             .then(function(item) {
               //self.grid.set('sort', 'email');
@@ -236,6 +249,29 @@ define([
                 alert("You are not Logged in. Press F5 to redirect to login page")
               }
             });
+          produsInComanda = produs;
+          produsInComanda.cantitate = totalCantItem;
+          produsInComanda.lastPrice = "";
+          produsInComanda.lastDiscount = "";
+          produsInComanda.lastFinalPret = "";
+
+          self.cfg.Comanda.filter({
+            produs: produs.produs,
+          }).fetch().then(function(items) {
+
+            if (items.length > 0) {
+              items[0].cantitate = totalCantItem;
+              produsInComanda = items[0];
+
+            } 
+            self.cfg.Comanda.add(produsInComanda).then(function(insertedInComanda) {
+              console.log("insertedInComanda", insertedInComanda);
+            })
+          });
+
+
+
+
         } else {
           if (produsInOferta) {
             alert("Produsul este deja in necesarul farmaciei !");
