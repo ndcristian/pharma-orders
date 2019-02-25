@@ -64,15 +64,21 @@ define([
         headers: self.cfg.options.headers,
         useRangeHeaders: true
       });
-      self.cfg.Comanda = new dstore.RestTrackable({
-        idProperty: '_id',
-        target: self.cfg.apiUrl + "/comanda/",
-        headers: self.cfg.options.headers,
-        useRangeHeaders: true
-      });
+//       self.cfg.Comanda = new dstore.RestTrackable({
+//         idProperty: '_id',
+//         target: self.cfg.apiUrl + "/comanda/",
+//         headers: self.cfg.options.headers,
+//         useRangeHeaders: true
+//       });
       self.cfg.Necesar = new dstore.RestTrackable({
         idProperty: '_id',
         target: self.cfg.apiUrl + "/necesar/",
+        headers: self.cfg.options.headers,
+        useRangeHeaders: true
+      });
+      self.cfg.Istoric = new dstore.RestTrackable({
+        idProperty: '_id',
+        target: self.cfg.apiUrl + "/istoric/",
         headers: self.cfg.options.headers,
         useRangeHeaders: true
       });

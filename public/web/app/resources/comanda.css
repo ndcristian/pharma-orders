@@ -1,11 +1,9 @@
 .formComanda {
   margin-bottom: 5px;
 }
-
 .grid-comanda {
   height: 60%;
 }
-
 .prodInfo {
   height: 35%;
   border: 1px solid #DDD;
@@ -16,7 +14,18 @@
 .field-lastDiscount {
   width: 5%;
 }
-
+.field-cantitate {
+  width: 5%;
+}
+.field-lastFinalPret {
+  width: 5%;
+}
+.field-comandat {
+  width: 4%;
+}
+.right input {
+  text-align:right !important;
+}
 .right textarea {
   text-align:right !important;
 }

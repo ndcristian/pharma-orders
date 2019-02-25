@@ -74,9 +74,10 @@ define([
           autoSave: true,
           editorArgs: {
             selectOnClick: true,
+             pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-           editor: Textarea
+          editor: ValidationTextBox
         },
           {
           field: "lastDiscount",
@@ -86,9 +87,10 @@ define([
           editOnClick: true, //editOn: "click",
           editorArgs: {
             selectOnClick: true,
+            pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-             editor: Textarea
+             editor: ValidationTextBox
         },           
         {
           field: "cantitate",
@@ -98,10 +100,18 @@ define([
           editOnClick: false, //editOn: "click",
           editorArgs: {
             selectOnClick: true,
+            pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-           editor: Textarea
+           editor: ValidationTextBox
         },
+         {
+          field: "lastFinalPret",
+          label: "PretRedus",
+          className: "right",
+          autoSave: true,        
+          
+        },            
         {
           field: "observatii",
           label: "Observatii",
@@ -141,12 +151,12 @@ define([
           }
         },
         {
-          field: "update",
-          label: "Update",
+          field: "comandat",
+          label: "Comandat",
           sortable: false,
           className: "center",
           renderCell: function(obj, data, cell) {
-            return put("button.update[title=Șterge] i.fa.fa-refresh< ");
+            return put("button.comandat[title=Șterge] i.fa.fa-check-square< ");
           }
         }
       ];
@@ -175,23 +185,40 @@ define([
         // pageSizeOptions: [10, 20]
       }, this.gridplace);
       this.grid = grid;
-
-      //            grid.on('.field-delete button.remove:click', function (evt) {
-      //
-      //                var row = grid.row(evt).data;
-      //                console.log("clickDelete", row);
-      //                grid.collection.remove(row._id).then(function (item) {
-      //                    console.log('then item', item);
-      //                    self.grid.set('sort', '_id');
-      //                });
-      //            });
-
-      grid.on('.field-update button.update:click', function(evt) {
+      
+      
+      grid.on('dgrid-datachange', function (event) {
+        console.log("event", event);
+        //console.log("event-cellinfo", event.cell.row.element.children[0].rows[0].cells[5].widget);
+       var row = event.cell.row.data;
+        console.log("row before",row);
+       
+        //event.cell.row.data.lastFinalPret = (+event.cell.row.data.lastPrice) * (1- (+event.cell.row.data.lastDiscount/100));
+        if(event.cell.column.field === "lastDiscount" || event.cell.column.field === "lastPrice"){
+          console.log ("field selected");
+          
+           
+          row.lastDiscount = event.cell.column.field === "lastDiscount" ? event.value : row.lastDiscount;
+          row.lastPrice = event.cell.column.field === "lastPrice" ? event.value : row.lastPrice;
+          row.lastFinalPret = (+row.lastPrice) * (1-(+row.lastDiscount)/100);
+           //grid.collection.put(row);
+           }
+        
+      })
+      
+      grid.on('.field-comandat button.comandat:click', function(evt) {
         var row = grid.row(evt).data;
+        delete row._id;
         console.log("clickUpdate", row);
-        grid.collection.put(row).then(function(item) {
+        
+        self.cfg.Istoric.add(row).then(function(item){
+          console.log ( "item comandat", item);
+        })
+        //grid.collectin.remove(row._id);
+        
+//         grid.collection.put(row).then(function(item) {
 
-        });
+//         });
       });
       grid.on('.field-delete button.remove:click', function(evt) {
         var row = grid.row(evt).data;

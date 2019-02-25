@@ -16,10 +16,10 @@ var routes = controls.project(route.model.routes);
 routes.forEach(function(route, index) {
   if (route.type === "get") {
     router.get("/" + route.route, ensureAuthenticated, function(req, res) {
-      console.log("--- app/routes.js -get controls este (pentru ruta) - " +route.route +':::' , controls.queryparse(req.query, req.user));
+      //console.log("--- app/routes.js -get controls este (pentru ruta) - " +route.route +':::' , controls.queryparse(req.query, req.user));
       if (controls.checkRights(req.user, route.rol)) {
         var query = controls.queryparse(req.query, req.user);
-        console.log("app/routes - get query este(pentru ruta) - " +route.route +':::' ,query);
+        //console.log("app/routes - get query este(pentru ruta) - " +route.route +':::' ,query);
 //         if (route.restrictedId) {
 //           query.query[route.restrictedId] = req.user._id.toString();
 //         }
@@ -41,7 +41,7 @@ routes.forEach(function(route, index) {
             query.query = req.params
          
       
-        console.log(':******mesaj din app/routes - get/: query este', query);
+        //console.log(':******mesaj din app/routes - get/: query este', query);
         crud.models[route.model_function](database, route.collection, query.query, query.sort, function(err, items) {
           res.setHeader('Content-Type', 'application/json');
           res.send(JSON.stringify(items));
@@ -55,6 +55,7 @@ routes.forEach(function(route, index) {
     router.post("/" + route.route, ensureAuthenticated, function(req, res) {
       crud.models[route.model_function](database, route.collection, req.body, function(err, items) {
         res.status(201);
+        console.log("from post route " + route.route, items.ops[0]);
         res.send(items.ops[0]);
       });
     });
@@ -85,14 +86,24 @@ routes.forEach(function(route, index) {
       query = {
         _id: _id
       };
-      object = req.body;
+      var object = req.body;
+      
       delete req.body._id;
       var update = {
         $set: object
       };
-      crud.models.put(database, route.collection, query, update, function(err, items) {
+      
+      
+      crud.models.put(database, route.collection, query, update, function(err, items, event) {
         res.setHeader('Content-Type', 'application/json');
-        res.send(items);
+         //console.log ("from put route " + route.route, items, items.documents);
+        var response = [];
+        object._id = _id;
+      response.push(object);
+        if (!err){
+          res.send(object);
+        }
+        
       });
     });
   }

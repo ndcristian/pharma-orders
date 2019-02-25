@@ -59,8 +59,8 @@ define([
                 console.log("productsArray", productsArray, totalCantItem);
               })
             }
-            
-console.log("produs in oferta", produsInOferta);
+
+            console.log("produs in oferta", produsInOferta);
 
             if (produsInOferta) {
 
@@ -244,7 +244,7 @@ console.log("produs in oferta", produsInOferta);
               //self.grid.set('sort', 'email');
               //console.log('self.checkUser', self.checkUser);
               console.log('btnsaveClick item is: ', item);
-              produsInOferta = true;
+              produsInOferta = false;
               if (item.error) {
                 alert("You are not Logged in. Press F5 to redirect to login page")
               }
@@ -263,14 +263,11 @@ console.log("produs in oferta", produsInOferta);
               items[0].cantitate = totalCantItem;
               produsInComanda = items[0];
 
-            } 
+            }
             self.cfg.Comanda.add(produsInComanda).then(function(insertedInComanda) {
               console.log("insertedInComanda", insertedInComanda);
             })
           });
-
-
-
 
         } else {
           if (produsInOferta) {
