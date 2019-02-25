@@ -38,6 +38,9 @@ define([
       this.produse.set('store', new DstoreAdapter(self.cfg.Produse));
       this.pos.set('store', new DstoreAdapter(self.cfg.Users));
       this.producator.set('store', new DstoreAdapter(self.cfg.Producatori));
+      this.distribuitor.set('store', new DstoreAdapter(self.cfg.Furnizori));
+      this.distribuitor.set('value', 4);
+      
       this.produse.on('change', function(item) {
         if (item) {
 
@@ -74,12 +77,12 @@ define([
           autoSave: true,
           editorArgs: {
             selectOnClick: true,
-             pattern: '[0-9]+(\.[0-9]{1,2})?',
+            pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
           editor: ValidationTextBox
         },
-          {
+        {
           field: "lastDiscount",
           label: "Discount",
           className: "right",
@@ -90,8 +93,8 @@ define([
             pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-             editor: ValidationTextBox
-        },           
+          editor: ValidationTextBox
+        },
         {
           field: "cantitate",
           label: "Cantitate",
@@ -103,15 +106,15 @@ define([
             pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-           editor: ValidationTextBox
+          editor: ValidationTextBox
         },
-         {
+        {
           field: "lastFinalPret",
           label: "PretRedus",
           className: "right",
-          autoSave: true,        
-          
-        },            
+          autoSave: true,
+
+        },
         {
           field: "observatii",
           label: "Observatii",
@@ -185,40 +188,37 @@ define([
         // pageSizeOptions: [10, 20]
       }, this.gridplace);
       this.grid = grid;
-      
-      
-      grid.on('dgrid-datachange', function (event) {
+
+
+      grid.on('dgrid-datachange', function(event) {
         console.log("event", event);
-        //console.log("event-cellinfo", event.cell.row.element.children[0].rows[0].cells[5].widget);
-       var row = event.cell.row.data;
-        console.log("row before",row);
-       
+        var row = event.cell.row.data;
+        console.log("row before", row);
+
         //event.cell.row.data.lastFinalPret = (+event.cell.row.data.lastPrice) * (1- (+event.cell.row.data.lastDiscount/100));
-        if(event.cell.column.field === "lastDiscount" || event.cell.column.field === "lastPrice"){
-          console.log ("field selected");
-          
-           
+        if (event.cell.column.field === "lastDiscount" || event.cell.column.field === "lastPrice") {
+          console.log("field selected");
           row.lastDiscount = event.cell.column.field === "lastDiscount" ? event.value : row.lastDiscount;
           row.lastPrice = event.cell.column.field === "lastPrice" ? event.value : row.lastPrice;
-          row.lastFinalPret = (+row.lastPrice) * (1-(+row.lastDiscount)/100);
-           //grid.collection.put(row);
-           }
-        
+          row.lastFinalPret = (+row.lastPrice) * (1 - (+row.lastDiscount) / 100);
+          //self.cfg.Conditii.add().then(function(){})
+        }
+
       })
-      
+
       grid.on('.field-comandat button.comandat:click', function(evt) {
         var row = grid.row(evt).data;
         delete row._id;
         console.log("clickUpdate", row);
-        
-        self.cfg.Istoric.add(row).then(function(item){
-          console.log ( "item comandat", item);
+
+        self.cfg.Istoric.add(row).then(function(item) {
+          console.log("item comandat", item);
         })
         //grid.collectin.remove(row._id);
-        
-//         grid.collection.put(row).then(function(item) {
 
-//         });
+        //         grid.collection.put(row).then(function(item) {
+
+        //         });
       });
       grid.on('.field-delete button.remove:click', function(evt) {
         var row = grid.row(evt).data;

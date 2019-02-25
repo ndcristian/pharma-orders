@@ -210,12 +210,12 @@ module.exports.model = {
       },
       id: 'cui'
     },
-     comanda_get: {
-      route: "comanda",       // route name
+    furnizori_get: {
+      route: "furnizori",       // route name
       type: "get",                // route type GET-POST-DELETE etc
       model_function: "get",      // function from crud-models
       collection: {               // about collection 
-        main: "comanda",      // first collection from where get data
+        main: "furnizori",      // first collection from where get data
         get: "",                  //  used for model_function get-get and is the collection used for the second get
         post: ""                  // idem like preview but with get-post
       },
@@ -227,6 +227,6 @@ module.exports.model = {
       },
       id: 'cui'
     }
-    
+         
   }
 };
