@@ -4,7 +4,7 @@ define([
   "dijit/_TemplatedMixin",
   "dijit/_WidgetsInTemplateMixin",
   "dijit/layout/BorderContainer",
-  "dojo/text!./templates/Comanda.html",
+  "dojo/text!./templates/Istoric.html",
   "dstore/RequestMemory",
   "dstore/legacy/DstoreAdapter",
   "util/dstore",
@@ -33,9 +33,7 @@ define([
         pl: self.cfg.user.pl
       };
       console.log('produs: ', produs);
-      var produsSelected = {
-        produs: "none"
-      };
+      var  produsSelected = {produs:"none"};
 
       // define form input events 
       this.produse.set('store', new DstoreAdapter(self.cfg.Produse));
@@ -43,10 +41,8 @@ define([
       this.producator.set('store', new DstoreAdapter(self.cfg.Producatori));
       this.distribuitor.set('store', new DstoreAdapter(self.cfg.Furnizori));
       this.distribuitor.set('value', 4);
-
-      this.distribuitor.on('change', function(item) {
-        console.log('item on change distrib', item, self.distribuitor.get('displayedValue'))
-      })
+      
+     
 
       this.produse.on('change', function(item) {
         if (item) {
@@ -81,71 +77,72 @@ define([
           label: "Pret",
           className: "right",
           editOnClick: true, //editOn: "click",
-          autoSave: true,
+         
           editorArgs: {
-            selectOnClick: true,
+            
             pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-          editor: ValidationTextBox
+         
         },
         {
           field: "lastDiscount",
           label: "Discount",
           className: "right",
-          autoSave: true,
-          editOnClick: true, //editOn: "click",
+         
+         
           editorArgs: {
-            selectOnClick: true,
+            
             pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-          editor: ValidationTextBox
+          
         },
 
         {
           field: "lastFinalPret",
           label: "PretRedus",
           className: "right",
-          autoSave: true,
+          
 
         },
         {
           field: "cantitate",
           label: "Necesar",
           className: "right",
-          autoSave: true,
+          
           editOnClick: false, //editOn: "click",
           editorArgs: {
+            
             pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-
+          
         },
         {
           field: "comanda",
           label: "Comanda",
           className: "right",
-          autoSave: true,
+          
           editOnClick: false, //editOn: "click",
           editorArgs: {
-            selectOnClick: true,
+            
             pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-          editor: ValidationTextBox
+          
         },
         {
           field: "observatii",
           label: "Observatii",
-          autoSave: true,
+          
           className: "left",
           editOnClick: true, //editOn: "click",
           editorArgs: {
-            selectOnClick: true,
+            
             style: "width: 100%;"
           },
-          editor: Textarea
+         
         },
         //         {
         //           field: "oferta",
@@ -179,7 +176,7 @@ define([
           sortable: false,
           className: "center",
           renderCell: function(obj, data, cell) {
-            return put("button.comandat[title=Comanda] i.fa.fa-check-square< ");
+            return put("button.comandat[title=Șterge] i.fa.fa-check-square< ");
           }
         }
       ];
@@ -187,10 +184,7 @@ define([
       //Define grid
 
       var grid = new dgrid.OnDmdSymmaryResizeHide({
-        collection: self.cfg.Comanda.filter({
-          //activ: true,
-          cui: self.cfg.user.cui
-        }),
+        collection: self.cfg.Istoric,
         columns: columns,
         sort: [{
           property: "produs",
@@ -225,37 +219,25 @@ define([
         }
 
       })
-
-      grid.on('dgrid-select', function(selectedProd) {
-        console.log('selected prod este :', selectedProd.rows[0].data);
+      
+      grid.on('dgrid-select', function(selectedProd){
+        console.log ( 'selected prod este :', selectedProd.rows[0].data);
         produsSelected = selectedProd.rows[0].data.produs;
         console.log(produsSelected);
-        self.gridfarmacii.set('collections', self.cfg.Necesar.filter({
-          produs: produsSelected
-        }).fetch().then(function(sss) {
-          console.log('sss', sss)
-        }));
+        self.gridfarmacii.set('collections', self.cfg.Necesar.filter({produs:produsSelected}).fetch().then(function(sss){
+          console.log('sss', sss)}));
         self.gridfarmacii.set('sort', 'produs');
       })
 
       grid.on('.field-comandat button.comandat:click', function(evt) {
         var row = grid.row(evt).data;
-        
+        delete row._id;
+        console.log("clickUpdate", row);
 
-        grid.collection.remove(row._id).then(function(item) {
-          console.log('am fost sters', item);
-          delete row._id;
-          console.log("clickUpdate", row);
-          row.furnizor = self.distribuitor.get('displayedValue');
-          
-          self.cfg.Istoric.add(row).then(function(item) {
-            console.log("item comandat", item);
-          });
-          //self.cfg.Necesar.remove()
-        });
-
-
-
+        self.cfg.Istoric.add(row).then(function(item) {
+          console.log("item comandat", item);
+        })
+        //grid.collectin.remove(row._id);
 
         //         grid.collection.put(row).then(function(item) {
 
@@ -271,7 +253,7 @@ define([
       });
 
       //***********-Define grid in Conditii comerciale
-
+      
       var columnsFarmacii = [{
           field: "pl",
           label: "Farmacia",
@@ -305,7 +287,7 @@ define([
           },
         }
       ]
-      var gridFarmacii = new dgrid.OnDmdSymmaryResizeHide({
+ var gridFarmacii = new dgrid.OnDmdSymmaryResizeHide({
         collection: self.cfg.Necesar,
         columns: columnsFarmacii,
         sort: [{
@@ -323,7 +305,7 @@ define([
         rowsPerPage: 20,
         pageSizeOptions: [10, 20]
       }, this.gridfarmacii);
-      this.gridfarmacii = gridFarmacii;
+this.gridfarmacii = gridFarmacii;
 
 
       self.producator.subscribe("/tournaments", function(route) {

@@ -8,6 +8,7 @@ define([
   "dojo/text!./templates/Layout.html",
   "app/widgets/Necesar",
   "app/widgets/Comanda",
+  "app/widgets/Istoric",
   "app/widgets/Restricted",
   "app/widgets/Users",
   "dstore/RequestMemory",
@@ -36,7 +37,7 @@ define([
   "dijit/layout/TabContainer",
   "dijit/layout/ContentPane"
 ], function(xhr, declare, whenAll, _TemplatedMixin, _WidgetsInTemplateMixin, BorderContainer,
-  template, Necesar, Comanda, Restricted, Users, RequestMemory, DstoreAdapter, dstore, dgrid, dateFormat, dateParse, nls,
+  template, Necesar, Comanda, Istoric,Restricted, Users, RequestMemory, DstoreAdapter, dstore, dgrid, dateFormat, dateParse, nls,
   FilteringSelect, ValidationTextBox, ComboBox, RadioButton, DateTextBox, TimeTextBox, Form, Button, put,
   on, dom, parser, domConstruct, html, ready
 ) {
@@ -125,6 +126,12 @@ define([
           title: "Comanda"
         });
         self.tabContainer.addChild(comanda);
+        
+         var istoric = new Istoric({
+          cfg: self.cfg,
+          title: "Istoric"
+        });
+        self.tabContainer.addChild(istoric);
       }
       
       if (self.cfg.user.rol == "root") {

@@ -75,7 +75,7 @@ define([
               produs.cantitate = 1;
               produs.observatii = "";
               produs.activ = true;
-
+              produs.comanda = 0;
               produsInOferta = false;
             }
           });
@@ -248,26 +248,34 @@ define([
               if (item.error) {
                 alert("You are not Logged in. Press F5 to redirect to login page")
               }
+
+
+//----- create record for command and insert the product into comanada
+              produsInComanda = produs;
+              produsInComanda.cantitate = totalCantItem;
+              produsInComanda.lastPrice = "";
+              produsInComanda.lastDiscount = "";
+              produsInComanda.lastFinalPret = "";
+            produsInComanda.idnecesar = item._id;
+            
+
+              self.cfg.Comanda.filter({
+                produs: produs.produs,
+              }).fetch().then(function(items) {
+
+                if (items.length > 0) {
+                  items[0].cantitate = totalCantItem;
+                  produsInComanda = items[0];
+
+                }
+                self.cfg.Comanda.add(produsInComanda).then(function(insertedInComanda) {
+                  console.log("insertedInComanda", insertedInComanda);
+                })
+              });
+
+
             });
-          produsInComanda = produs;
-          produsInComanda.cantitate = totalCantItem;
-          produsInComanda.lastPrice = "";
-          produsInComanda.lastDiscount = "";
-          produsInComanda.lastFinalPret = "";
 
-          self.cfg.Comanda.filter({
-            produs: produs.produs,
-          }).fetch().then(function(items) {
-
-            if (items.length > 0) {
-              items[0].cantitate = totalCantItem;
-              produsInComanda = items[0];
-
-            }
-            self.cfg.Comanda.add(produsInComanda).then(function(insertedInComanda) {
-              console.log("insertedInComanda", insertedInComanda);
-            })
-          });
 
         } else {
           if (produsInOferta) {

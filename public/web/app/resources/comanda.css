@@ -1,8 +1,14 @@
 .formComanda {
   margin-bottom: 5px;
 }
+.grid {
+  height:100%;
+}
 .grid-comanda {
   height: 60%;
+}
+.grid-farmacii {
+  height: 100% !important;
 }
 .prodInfo {
   height: 35%;
@@ -28,4 +34,8 @@
 }
 .right textarea {
   text-align:right !important;
+}
+
+.Farmacii {
+  height:100%;
 }
