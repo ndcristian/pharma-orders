@@ -77,6 +77,12 @@ define([
         headers: self.cfg.options.headers,
         useRangeHeaders: true
       });
+      self.cfg.NecesarRemove = new dstore.RestTrackable({
+        idProperty: '_id',
+        target: self.cfg.apiUrl + "/necesar_clean/",
+        headers: self.cfg.options.headers,
+        useRangeHeaders: true
+      });
       self.cfg.Istoric = new dstore.RestTrackable({
         idProperty: '_id',
         target: self.cfg.apiUrl + "/istoric/",

@@ -50,11 +50,14 @@ define([
             //pl: self.cfg.user.pl
           }).fetch().then(function(items) {
             console.log("Oferta este", items);
+            var necesarDetalii = [];
             if (items.totalLength > 0) {
               items.forEach(function(productsArray) {
                 if (productsArray.pl === self.cfg.user.pl) {
                   produsInOferta = true;
+                  
                 }
+                necesarDetalii.push({pl:productsArray.pl, cantitate:productsArray.cantitate});
                 totalCantItem = totalCantItem + (+productsArray.cantitate);
                 console.log("productsArray", productsArray, totalCantItem);
               })
@@ -76,6 +79,7 @@ define([
               produs.observatii = "";
               produs.activ = true;
               produs.comanda = 0;
+              produs.detalii = necesarDetalii;
               produsInOferta = false;
             }
           });
@@ -251,6 +255,7 @@ define([
 
 
 //----- create record for command and insert the product into comanada
+            produs.detalii.push({pl:self.cfg.user.pl, cantitate:totalCantItem});
               produsInComanda = produs;
               produsInComanda.cantitate = totalCantItem;
               produsInComanda.lastPrice = "";
@@ -269,6 +274,7 @@ define([
 
                 }
                 self.cfg.Comanda.add(produsInComanda).then(function(insertedInComanda) {
+                  totalCantItem = 0;
                   console.log("insertedInComanda", insertedInComanda);
                 })
               });

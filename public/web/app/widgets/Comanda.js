@@ -230,36 +230,31 @@ define([
         console.log('selected prod este :', selectedProd.rows[0].data);
         produsSelected = selectedProd.rows[0].data.produs;
         console.log(produsSelected);
-        self.gridfarmacii.set('collections', self.cfg.Necesar.filter({
+        console.log('grid este', self.gridfarmacii.collection);
+        self.gridfarmacii.set('collection', self.cfg.Necesar.filter({
           produs: produsSelected
-        }).fetch().then(function(sss) {
-          console.log('sss', sss)
         }));
-        self.gridfarmacii.set('sort', 'produs');
+       
       })
 
       grid.on('.field-comandat button.comandat:click', function(evt) {
         var row = grid.row(evt).data;
         
-
         grid.collection.remove(row._id).then(function(item) {
           console.log('am fost sters', item);
           delete row._id;
           console.log("clickUpdate", row);
           row.furnizor = self.distribuitor.get('displayedValue');
-          
+          //add record to istoric tabele
           self.cfg.Istoric.add(row).then(function(item) {
             console.log("item comandat", item);
+            //remove record from necesar
+            self.cfg.NecesarRemove.remove(row.idnecesar);
           });
-          //self.cfg.Necesar.remove()
+          
         });
 
 
-
-
-        //         grid.collection.put(row).then(function(item) {
-
-        //         });
       });
       grid.on('.field-delete button.remove:click', function(evt) {
         var row = grid.row(evt).data;
@@ -283,6 +278,17 @@ define([
             style: "width: 100%;"
           },
         },
+          {
+          field: "produs",
+          label: "Produse",
+          autoSave: true,
+          className: "left",
+          editOnClick: true, //editOn: "click",
+          editorArgs: {
+            selectOnClick: true,
+            style: "width: 100%;"
+          }
+        }, 
         {
           field: "cantitate",
           label: "Cantitate",
@@ -306,7 +312,7 @@ define([
         }
       ]
       var gridFarmacii = new dgrid.OnDmdSymmaryResizeHide({
-        collection: self.cfg.Necesar,
+        collection: self.cfg.Necesar.filter({}),
         columns: columnsFarmacii,
         sort: [{
           property: "produs",

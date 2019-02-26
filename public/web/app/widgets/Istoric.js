@@ -224,11 +224,8 @@ define([
         console.log ( 'selected prod este :', selectedProd.rows[0].data);
         produsSelected = selectedProd.rows[0].data.produs;
         console.log(produsSelected);
-        self.gridfarmacii.set('collections', self.cfg.Necesar.filter({produs:produsSelected}).fetch().then(function(sss){
-          console.log('sss', sss)}));
-        self.gridfarmacii.set('sort', 'produs');
-      })
-
+        self.gridfarmacii.set('collection', self.cfg.Necesar.filter({produs:produsSelected}))
+      });
       grid.on('.field-comandat button.comandat:click', function(evt) {
         var row = grid.row(evt).data;
         delete row._id;

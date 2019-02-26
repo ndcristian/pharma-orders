@@ -7,7 +7,7 @@ var route = require('./models/route_models'); // Project configuration
 var crud = require('./models/crud_models'); //used for GET/INSERT/UPDATE/DELETE
 var ObjectID = require('mongodb').ObjectID;
 var controls = require('./controllers/controls'); //Other user functions
-var database = require ("../../routes/models/appconfig").database;
+var database = require("../../routes/models/appconfig").database;
 
 var routes = controls.project(route.model.routes);
 
@@ -20,27 +20,27 @@ routes.forEach(function(route, index) {
       if (controls.checkRights(req.user, route.rol)) {
         var query = controls.queryparse(req.query, req.user);
         //console.log("app/routes - get query este(pentru ruta) - " +route.route +':::' ,query);
-//         if (route.restrictedId) {
-//           query.query[route.restrictedId] = req.user._id.toString();
-//         }
+        //         if (route.restrictedId) {
+        //           query.query[route.restrictedId] = req.user._id.toString();
+        //         }
         crud.models[route.model_function](database, route.collection, query.query, query.sort, function(err, items) {
           //console.log ('items in ' + route.route +':' ,items),
           res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(items));
+          res.send(JSON.stringify(items));
         });
       } else {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify([]));
       }
     });
-   
-    router.get("/" + route.route + "/:" + route.id , ensureAuthenticated, function(req, res) {
-//       console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%app/routes REQUEST este', req);
+
+    router.get("/" + route.route + "/:" + route.id, ensureAuthenticated, function(req, res) {
+      //       console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%app/routes REQUEST este', req);
       if (controls.checkRights(req.user, route.rol)) {
         var query = {};
-            query.query = req.params
-         
-      
+        query.query = req.params
+
+
         //console.log(':******mesaj din app/routes - get/: query este', query);
         crud.models[route.model_function](database, route.collection, query.query, query.sort, function(err, items) {
           res.setHeader('Content-Type', 'application/json');
@@ -74,6 +74,7 @@ routes.forEach(function(route, index) {
     });
     router.delete("/" + route.route + "/:_id", ensureAuthenticated, function(req, res) {
       var _id = ObjectID(req.params._id);
+      console.log("from routes delete rute:::::" + route.route, req.params);
       crud.models.delete(database, route.collection, {
         _id: _id
       }, function(err, items) {
@@ -87,26 +88,43 @@ routes.forEach(function(route, index) {
         _id: _id
       };
       var object = req.body;
-      
+
       delete req.body._id;
       var update = {
         $set: object
       };
-      
-      
       crud.models.put(database, route.collection, query, update, function(err, items, event) {
         res.setHeader('Content-Type', 'application/json');
-         //console.log ("from put route " + route.route, items, items.documents);
+        //console.log ("from put route " + route.route, items, items.documents);
         var response = [];
         object._id = _id;
-      response.push(object);
-        if (!err){
+        response.push(object);
+        if (!err) {
           res.send(object);
         }
-        
+
       });
     });
   }
+});
+// special route for this project
+router.delete("/necesar_clean/:_id", ensureAuthenticated, function(req, res) {
+  //trebuie sa folosim _id ca sa obtinem id-ul produsului si api toate inregistrarile din necesar cu acest id produs pentru a le da ca parametru la remove
+  //db.users.remove( { status : "P" } )
+  var _id = ObjectID(req.params._id);
+  console.log("from routes delete rute:::::" + route.route, req.params);
+  crud.models.get(database, {main:'necesar'}, {
+    _id: _id
+  }, {}, function(err, produse) {
+    crud.models.deleteMany(database, {main:'necesar'}, {
+      produs: produse[0].produs
+    }, function(err, items) {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(items);
+    });
+  })
+
+
 });
 
 // used from dojo main.js to get user info 
@@ -119,10 +137,12 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   } else {
-//     res.setHeader('Content-Type', 'text/html');
-     req.flash('error_msg', 'You are not logged in');
-//     res.redirect('/users/login');
-    res.send({error: 'Not logged in'})
+    //     res.setHeader('Content-Type', 'text/html');
+    req.flash('error_msg', 'You are not logged in');
+    //     res.redirect('/users/login');
+    res.send({
+      error: 'Not logged in'
+    })
   }
 }
 
