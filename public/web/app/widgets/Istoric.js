@@ -224,6 +224,7 @@ define([
         console.log ( 'selected prod este :', selectedProd.rows[0].data);
         produsSelected = selectedProd.rows[0].data.produs;
         console.log(produsSelected);
+        console.log("self.cfg.istoric", self.cfg.Istoric);
         self.gridfarmacii.set('collection', self.cfg.Necesar.filter({produs:produsSelected}))
       });
       grid.on('.field-comandat button.comandat:click', function(evt) {

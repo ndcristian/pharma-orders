@@ -72,7 +72,8 @@ module.exports.model = {
       rol: ['root', 'admin', 'power', 'normal'],                // who can access this route
       query: {                    // query that can be used in crud_models
 
-      }
+      },
+      id:'_id'
     },
     comanda_get: {
       route: "comanda",           // route name
@@ -106,7 +107,8 @@ module.exports.model = {
       rol: ['root', 'admin', 'power', 'normal'],                // who can access this route
       query: {                    // query that can be used in crud_models
 
-      }
+      },
+      id:'_id'
     },
     istoric_get: {
       route: "istoric",           // route name
@@ -140,7 +142,43 @@ module.exports.model = {
       rol: ['root', 'admin', 'power', 'normal'],                // who can access this route
       query: {                    // query that can be used in crud_models
 
-      }
+      },
+      id:'_id'
+    },
+    conditii_get: {
+      route: "conditii",           // route name
+      type: "get",                // route type GET-POST-DELETE etc
+      model_function: "get",      // function from crud-models
+      collection: {               // about collection 
+        main: "conditii",          // first collection from where get data
+        get: "",                  //  used for model_function get-get and is the collection used for the second get
+        post: ""                  // idem like preview but with get-post
+      },
+      template: "",               // used if we have to render  template
+      sum: "fieldToSum",          // a filed to sum
+      rol: ['root', 'admin', 'power', 'normal'],                // who can access this route
+      query: {                    // query that can be used in crud_models
+
+      },
+      restictedFiled:"",
+      id: 'cui'           // this field is used to filter the information from database depending by the user
+    },
+    conditii_post: {
+      route: "conditii",       // route name
+      type: "post",                // route type GET-POST-DELETE etc
+      model_function: "post",      // function from crud-models
+      collection: {               // about collection 
+        main: "conditii",      // first collection from where get data
+        get: "",                  //  used for model_function get-get and is the collection used for the second get
+        post: ""                  // idem like preview but with get-post
+      },
+      template: "",               // used if we have to render  template
+      sum: "fieldToSum",          // a filed to sum
+      rol: ['root', 'admin', 'power', 'normal'],                // who can access this route
+      query: {                    // query that can be used in crud_models
+
+      },
+      id:'id'
     },
     oferte_get: {
       route: "oferte",       // route name

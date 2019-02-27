@@ -95,6 +95,12 @@ define([
         headers: self.cfg.options.headers,
         useRangeHeaders: true
       });
+      self.cfg.Conditii = new dstore.RestTrackable({
+        idProperty: 'id',
+        target: self.cfg.apiUrl + "/conditii/",
+        headers: self.cfg.options.headers,
+        useRangeHeaders: true
+      });
       self.cfg.Users = new RequestMemory({
         idProperty: '_id',
         target: self.cfg.apiUrl + "/users/?cui=" + (+self.cfg.user.cui),

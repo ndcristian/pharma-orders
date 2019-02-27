@@ -218,12 +218,27 @@ define([
         //event.cell.row.data.lastFinalPret = (+event.cell.row.data.lastPrice) * (1- (+event.cell.row.data.lastDiscount/100));
         if (event.cell.column.field === "lastDiscount" || event.cell.column.field === "lastPrice") {
           console.log("field selected");
+          
           row.lastDiscount = event.cell.column.field === "lastDiscount" ? event.value : row.lastDiscount;
           row.lastPrice = event.cell.column.field === "lastPrice" ? event.value : row.lastPrice;
           row.lastFinalPret = (+row.lastPrice) * (1 - (+row.lastDiscount) / 100);
-          //self.cfg.Conditii.add().then(function(){})
+          var recordConditii = {};
+         Object.assign(recordConditii, row);
+          recordConditii.detalii='';
+          recordConditii.furnizor = self.distribuitor.get('displayedValue');
+          recordConditii.id = row._id + self.distribuitor.get('displayedValue');
+          recordConditii.idcomanda = row._id;
+          console.log ('row dupa conditii', recordConditii);
+         
+          self.cfg.Conditii.add(recordConditii).then(function(cond){
+            console.log('conditii', cond); 
+          })
         }
 
+      })
+      
+      grid.on('dgrid-deselect', function(x){
+        console.log('xxx',x);
       })
 
       grid.on('dgrid-select', function(selectedProd) {

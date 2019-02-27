@@ -30,7 +30,7 @@ module.exports.models = {
     MongoClient.connect(url, function(err, client) {
       var db = client.db(database);
       console.log('----crud-models PUT query: ', query);
-      db.collection(collection.main).updateOne(query, update, callback);
+      db.collection(collection.main).updateOne(query, update,{ upsert: true }, callback);
     });
   },
   deleteMany: function(database, collection, query, callback){

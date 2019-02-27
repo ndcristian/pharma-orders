@@ -72,7 +72,7 @@ routes.forEach(function(route, index) {
         res.redirect('/');
       });
     });
-    router.delete("/" + route.route + "/:_id", ensureAuthenticated, function(req, res) {
+    router.delete("/" + route.route + "/:" + route.id, ensureAuthenticated, function(req, res) {
       var _id = ObjectID(req.params._id);
       console.log("from routes delete rute:::::" + route.route, req.params);
       crud.models.delete(database, route.collection, {
@@ -82,8 +82,16 @@ routes.forEach(function(route, index) {
         res.send(items);
       });
     });
-    router.put("/" + route.route + "/:_id", ensureAuthenticated, function(req, res) {
-      var _id = ObjectID(req.body._id);
+    router.put("/" + route.route + "/:" + route.id, ensureAuthenticated, function(req, res) {
+      console.log(req.body[route.id]);
+      var _id = "";
+      //facem testul pentru ca in tabela conditii vreau sa compun id-ul din _id din comanda si numele furnizorului pentru a face update la fiecare on-change in dgrid
+      if (route.route==='conditii') {
+         _id = req.body[route.id];
+      } else {
+         _id = ObjectID(req.body[route.id]);
+      }
+      
       query = {
         _id: _id
       };
