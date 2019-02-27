@@ -249,6 +249,9 @@ define([
         self.gridfarmacii.set('collection', self.cfg.Necesar.filter({
           produs: produsSelected
         }));
+        self.gridconditii.set('collection', self.cfg.Conditii.filter({
+          idcomanda: selectedProd.rows[0].data._id
+        }));
        
       })
 
@@ -280,7 +283,7 @@ define([
         });
       });
 
-      //***********-Define grid in Conditii comerciale
+      //***********-Define grid in Detalii necesar pe farmacii
 
       var columnsFarmacii = [{
           field: "pl",
@@ -325,7 +328,7 @@ define([
             style: "width: 100%;"
           },
         }
-      ]
+      ];
       var gridFarmacii = new dgrid.OnDmdSymmaryResizeHide({
         collection: self.cfg.Necesar.filter({}),
         columns: columnsFarmacii,
@@ -345,14 +348,70 @@ define([
         pageSizeOptions: [10, 20]
       }, this.gridfarmacii);
       this.gridfarmacii = gridFarmacii;
+      
+      
+//****** Define grid in Conditii comerciale
 
-
-      self.producator.subscribe("/tournaments", function(route) {
-        //console.log(route);
-        self.storetournaments.add(route);
-        //console.log('store tournaments subscribe', self.storetournaments);
+       var columnsConditii = [{
+          field: "furnizor",
+          label: "Furnizor",
+          className: "left",
+           editorArgs: {
+             style: "width: 100%;"
+          },
+        },
+          {
+          field: "lastPrice",
+          label: "Pret",
+          className: "left",
+          editorArgs: {
+            style: "width: 100%;"
+          }
+        }, 
+        {
+          field: "lastDiscount",
+          label: "Discount",
+          className: "left",
+          editorArgs: {
+            style: "width: 100%;"
+          }
+        }, {
+          field: "lastFinalPret",
+          label: "PretFinal",
+          className: "left",
+          editorArgs: {
+            style: "width: 100%;"
+          },
+        }
+      ];
+      
+      var gridConditii = new dgrid.OnDmdSymmaryResizeHide({
+        collection: self.cfg.Conditii.filter({}),
+        columns: columnsConditii,
+        sort: [{
+          property: "produs",
+          descending: false
+        }],
+        selectionMode: "single",
+        getBeforePut: false,
+        cellNavigation: false,
+        noDataMessage: "Nu există date",
+        loadingMessage: "Se încarcă ...",
+        pagingLinks: false,
+        pagingTextBox: true,
+        firstLastArrows: true,
+        rowsPerPage: 20,
+        pageSizeOptions: [10, 20]
+      }, this.gridconditii);
+      this.gridconditii = gridConditii;
+      
+      
+      
+      
+//       self.producator.subscribe("/tournaments", function(route) {
+//         self.storetournaments.add(route);
         //self.producator.set('store', new DstoreAdapter(self.storetournaments));
-      });
+//       });
 
     } // postCreate
   });

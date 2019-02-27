@@ -59,12 +59,12 @@ define([
         headers: self.cfg.options.headers,
         useRangeHeaders: true
       });
-      self.cfg.Oferte = new RequestMemory({
-        idProperty: 'id',
-        target: self.cfg.apiUrl + "/oferte/",
-        headers: self.cfg.options.headers,
-        useRangeHeaders: true
-      });
+//       self.cfg.Oferte = new RequestMemory({
+//         idProperty: 'id',
+//         target: self.cfg.apiUrl + "/oferte/",
+//         headers: self.cfg.options.headers,
+//         useRangeHeaders: true
+//       });
       self.cfg.Furnizori = new RequestMemory({
         idProperty: 'idfurnizor',
         target: self.cfg.apiUrl + "/furnizori/",
