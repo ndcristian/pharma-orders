@@ -3,9 +3,9 @@ var bcrypt = require('bcryptjs');
 var mongo = require('mongodb');
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
-var database = require("./models/appconfig").database;
+///var database = require("./models/appconfig").database;
 var dbUrl = 'mongodb://localhost/' + database;
-
+var database = 'pharma';
 //----------------------------------------------------
 module.exports.createUser = function(newUser, callback) {
   bcrypt.genSalt(10, function(err, salt) {

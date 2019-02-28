@@ -3,7 +3,7 @@ var mongo = require('mongodb');
 assert = require('assert');
 // Connection url
 var url = 'mongodb://localhost';
-// Connect using MongoClient
+// Connect using MongoClient.
 
 module.exports.models = {
   get: function(database, collection, query, sort, callback) {
@@ -11,12 +11,14 @@ module.exports.models = {
       var db = client.db(database);
       console.log('from crud_models query este : ', query, sort);
       db.collection(collection.main).find(query).sort(sort).toArray(callback);
+      //client.close();
     });
   },
   post: function(database, collection, query, callback) {
     MongoClient.connect(url, function(err, client) {
       var db = client.db(database);
       db.collection(collection.main).insertOne(query, callback);
+      //client.close();
     });
   },
   delete: function(database, collection, query, callback) {
@@ -24,6 +26,7 @@ module.exports.models = {
       //
       var db = client.db(database);
       db.collection(collection.main).deleteOne(query, callback);
+      //client.close();
     });
   },
   put: function(database, collection, query, update, callback) {
@@ -31,6 +34,7 @@ module.exports.models = {
       var db = client.db(database);
       console.log('----crud-models PUT query: ', query);
       db.collection(collection.main).updateOne(query, update,{ upsert: true }, callback);
+      //client.close();
     });
   },
   deleteMany: function(database, collection, query, callback){
@@ -38,6 +42,7 @@ module.exports.models = {
       //
       var db = client.db(database);
       db.collection(collection.main).remove(query, callback);
+      //client.close();
     });
   },
 
@@ -98,3 +103,28 @@ module.exports.models = {
     });
   }
 };
+
+
+
+
+
+// let db;
+// let collection;
+
+// MongoClient
+//   .connect(mongo_uri, { useNewUrlParser: true, poolSize: 10 })
+//   .then(client => {
+//     db = client.db('my-db');
+//     collection = db.collection('my-collection');
+//   })
+//   .catch(error => console.error(error));
+
+// app.get('/static', (req, res) => {
+//   res.status(200).json('Some static data')
+// });
+
+// app.get('/', (req, res) => {
+//   collection.find({}).toArray().then(response => res.status(200).json(response)).catch(error => console.error(error));
+// });
+
+

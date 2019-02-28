@@ -7,8 +7,8 @@ var route = require('./models/route_models'); // Project configuration
 var crud = require('./models/crud_models'); //used for GET/INSERT/UPDATE/DELETE
 var ObjectID = require('mongodb').ObjectID;
 var controls = require('./controllers/controls'); //Other user functions
-var database = require("../../routes/models/appconfig").database;
-
+//var database = require("../../routes/models/appconfig").database;
+var database = 'pharma';
 var routes = controls.project(route.model.routes);
 
 

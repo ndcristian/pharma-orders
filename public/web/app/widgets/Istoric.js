@@ -234,21 +234,21 @@ define([
       this.grid = grid;
 
 
-      grid.on('dgrid-datachange', function(event) {
-        console.log("event", event);
-        var row = event.cell.row.data;
-        console.log("row before", row);
+//       grid.on('dgrid-datachange', function(event) {
+//         console.log("event", event);
+//         var row = event.cell.row.data;
+//         console.log("row before", row);
 
-        //event.cell.row.data.lastFinalPret = (+event.cell.row.data.lastPrice) * (1- (+event.cell.row.data.lastDiscount/100));
-        if (event.cell.column.field === "lastDiscount" || event.cell.column.field === "lastPrice") {
-          console.log("field selected");
-          row.lastDiscount = event.cell.column.field === "lastDiscount" ? event.value : row.lastDiscount;
-          row.lastPrice = event.cell.column.field === "lastPrice" ? event.value : row.lastPrice;
-          row.lastFinalPret = (+row.lastPrice) * (1 - (+row.lastDiscount) / 100);
-          //self.cfg.Conditii.add().then(function(){})
-        }
+//         //event.cell.row.data.lastFinalPret = (+event.cell.row.data.lastPrice) * (1- (+event.cell.row.data.lastDiscount/100));
+//         if (event.cell.column.field === "lastDiscount" || event.cell.column.field === "lastPrice") {
+//           console.log("field selected");
+//           row.lastDiscount = event.cell.column.field === "lastDiscount" ? event.value : row.lastDiscount;
+//           row.lastPrice = event.cell.column.field === "lastPrice" ? event.value : row.lastPrice;
+//           row.lastFinalPret = (+row.lastPrice) * (1 - (+row.lastDiscount) / 100);
+//           //self.cfg.Conditii.add().then(function(){})
+//         }
 
-      })
+//       })
 
       grid.on('dgrid-select', function(selectedProd) {
         console.log('selected prod este :', selectedProd.rows[0].data.detalii);

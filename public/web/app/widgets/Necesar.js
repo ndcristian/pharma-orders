@@ -32,19 +32,26 @@ define([
         cui: self.cfg.user.cui,
         pl: self.cfg.user.pl
       };
-      let produsInComanda = {};
+      let produsInComanda = {
+        cui: self.cfg.user.cui,
+        pl: self.cfg.user.pl
+      };
       console.log('produs: ', produs);
       let produsInOferta = false; //test if products exist in Necesar and alert user
       let totalCantItem = 0; // keep totals for every products in Necesar
       // define form input events 
       this.produse.set('store', new DstoreAdapter(self.cfg.Produse));
       this.produse.on('change', function(item) {
+        produs = {
+          cui: self.cfg.user.cui,
+          pl: self.cfg.user.pl
+        };
         totalCantItem = 0;
         if (item) {
           var itemSelected = this.item;
           console.log("itemSelected", itemSelected);
           self.producator.set('value', this.item.grupproducator);
-          
+
           self.cfg.Necesar.filter({
             produs: itemSelected.denumirearticol,
             //activ: true
@@ -58,9 +65,12 @@ define([
               items.forEach(function(productsArray) {
                 if (productsArray.pl === self.cfg.user.pl) {
                   produsInOferta = true;
-                  
+
                 }
-                necesarDetalii.push({pl:productsArray.pl, cantitate:productsArray.cantitate}); // array with quantity for each PL
+                necesarDetalii.push({
+                  pl: productsArray.pl,
+                  cantitate: productsArray.cantitate
+                }); // array with quantity for each PL
                 totalCantItem = totalCantItem + (+productsArray.cantitate); // total quantity of the selected products in the necesar
                 //console.log("productsArray", productsArray, totalCantItem);
               })
@@ -73,19 +83,21 @@ define([
               alert("Produsul este deja in necesarul farmaciei !");
               produsInOferta = true;
             } else {
-              var filteristoric = {produs:itemSelected.denumirearticol};
+              var filteristoric = {
+                produs: itemSelected.denumirearticol
+              };
               console.log('filteristoric', filteristoric);
-              self.cfg.Istoric.filter(filteristoric).sort('date').fetch().then(function(items){
-              console.log("items from istoric in necesar", items);
-                if(items.totalLength>0){
-                  let lastItem = items[items.totalLength-1];
-                  console.log ("item din istoric last aquizision", lastItem,items );
+              self.cfg.Istoric.filter(filteristoric).sort('date').fetch().then(function(items) {
+                console.log("items from istoric in necesar", items);
+                if (items.totalLength > 0) {
+                  let lastItem = items[items.totalLength - 1];
+                  console.log("item din istoric last aquizision", lastItem, items);
                   produs.lastFurnizor = lastItem.furnizor;
-                  produs.lastAchDiscount  = lastItem.lastDiscount;
-                  produs.lastAchPretFinal  = lastItem.lastFinalPret;
+                  produs.lastAchDiscount = lastItem.lastDiscount;
+                  produs.lastAchPretFinal = lastItem.lastFinalPret;
                 }
-            });
-              
+              });
+
               console.log("Nu este in necesar");
               produs.produs = itemSelected.denumirearticol;
               produs.producator = itemSelected.grupproducator;
@@ -227,7 +239,7 @@ define([
       }, this.gridplace);
       this.grid = grid;
 
-        grid.on('.field-update button.update:click', function(evt) {
+      grid.on('.field-update button.update:click', function(evt) {
         var row = grid.row(evt).data;
         console.log("clickUpdate", row);
         grid.collection.put(row).then(function(item) {
@@ -254,7 +266,7 @@ define([
             .then(function(item) {
               //self.grid.set('sort', 'email');
               //console.log('self.checkUser', self.checkUser);
-            
+
               console.log('btnsaveClick item is: ', item);
               produsInOferta = false;
               if (item.error) {
@@ -262,15 +274,18 @@ define([
               }
 
 
-//----- create record for command and insert the product into comanada
-            produs.detalii.push({pl:self.cfg.user.pl, cantitate:totalCantItem});
+              //----- create record for command and insert the product into comanada
+              produs.detalii.push({
+                pl: self.cfg.user.pl,
+                cantitate: totalCantItem
+              });
               produsInComanda = produs;
               produsInComanda.cantitate = totalCantItem;
               produsInComanda.lastPrice = "";
               produsInComanda.lastDiscount = "";
               produsInComanda.lastFinalPret = "";
-            produsInComanda.idnecesar = item._id;
-            
+              produsInComanda.idnecesar = item._id;
+
 
               self.cfg.Comanda.filter({
                 produs: produs.produs,
