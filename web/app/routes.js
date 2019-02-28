@@ -19,7 +19,7 @@ routes.forEach(function(route, index) {
       //console.log("--- app/routes.js -get controls este (pentru ruta) - " +route.route +':::' , controls.queryparse(req.query, req.user));
       if (controls.checkRights(req.user, route.rol)) {
         var query = controls.queryparse(req.query, req.user);
-        //console.log("app/routes - get query este(pentru ruta) - " +route.route +':::' ,query);
+        console.log("app/routes - get query este(pentru ruta) - " +route.route +':::' ,query);
         //         if (route.restrictedId) {
         //           query.query[route.restrictedId] = req.user._id.toString();
         //         }

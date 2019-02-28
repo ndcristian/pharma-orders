@@ -9,7 +9,7 @@ module.exports.models = {
   get: function(database, collection, query, sort, callback) {
     MongoClient.connect(url, function(err, client) {
       var db = client.db(database);
-      console.log('from crud_models query este : ', query);
+      console.log('from crud_models query este : ', query, sort);
       db.collection(collection.main).find(query).sort(sort).toArray(callback);
     });
   },

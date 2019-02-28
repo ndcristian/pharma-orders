@@ -128,7 +128,17 @@ define([
           title: "Necesar Produse"
         });
         self.tabContainer.addChild(necesar);
+  
       }
+       if (self.cfg.user.rol == "power") {
+        var istoricUser = new Istoric({
+          cfg: self.cfg,
+          title: "Istoric"
+        });
+        self.tabContainer.addChild(istoricUser);
+  
+      }
+
 
       console.log("cfg", self.cfg);
 

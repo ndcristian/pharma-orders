@@ -14,6 +14,7 @@
 /*@import '../../dojo/css/skins/claro.css';*/
 @import 'necesar.css';
 @import 'comanda.css';
+@import 'istoric.css';
 html,
 body {
   height: 100%;

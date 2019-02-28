@@ -14,21 +14,22 @@
       <div data-dojo-type="dijit/form/FilteringSelect" name="distribuitor" style="width:22%" ; data-dojo-attach-point='distribuitor' class="" data-dojo-props="placeHolder:'Distribuitor', hasDownArrow: true, maxHeight:300, required: false,  labelAttr: 'name',
                                   searchAttr: 'name', selectOnClick: true ">
       </div>
+      <div data-dojo-type="dijit/form/Button" class="" 
+                 data-dojo-attach-point="btnRefresh"
+                 data-dojo-props="label:'Refresh', disabled:false">
+       </div>
 
     </form>
     <div class="grid-comanda" data-dojo-props="region: 'center'" data-dojo-attach-point="gridplace"></div>
 
     <div class="prodInfo" data-dojo-props="region: 'center'" data-dojo-attach-point="prodInfo">
-      <div data-dojo-type="dijit/layout/TabContainer" data-dojo-attach-point="tabInfoComanda" class="Farmacii" tabStrip="true" data-dojo-props="region: 'center', doLayout: true, isLayoutContainer: true, persist: true">
-        <div class="" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center', title:'Farmacii', doLayout: true, isLayoutContainer: true, persist: true" style="border:0px;">
+<!--       <div data-dojo-type="dijit/layout/TabContainer" data-dojo-attach-point="tabInfoComanda" class="Farmacii" tabStrip="true" data-dojo-props="region: 'center', doLayout: true, isLayoutContainer: true, persist: true"> -->
+<!--         <div class="" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center', title:'Farmacii', doLayout: true, isLayoutContainer: true, persist: true" style="border:0px;"> -->
           <div class="grid-farmacii" data-dojo-props="region: 'center'" data-dojo-attach-point="gridfarmacii"></div>
 
-        </div>
-        <div class="" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region: 'center', title:'Conditii', doLayout: true, isLayoutContainer: true, persist: true" style="border:0px;">
-          <div class="grid-farmacii" data-dojo-props="region: 'center'" data-dojo-attach-point="gridconditii"></div>
-
-        </div>
-      </div>
+<!--         </div> -->
+       
+<!--       </div> -->
 
     </div>
 

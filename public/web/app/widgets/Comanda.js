@@ -46,15 +46,21 @@ define([
 
       this.distribuitor.on('change', function(item) {
         console.log('item on change distrib', item, self.distribuitor.get('displayedValue'))
-      })
+      });
 
       this.produse.on('change', function(item) {
+        console.log('item in produse on change', item,self.produse.get('displayedValue'));
         if (item) {
+          console.log('item in produse on change', item);
+          self.grid.set('collection', self.cfg.Comanda.filter({produs:self.produse.get('displayedValue')}))
 
-        } else {
+        }}); 
+         this.producator.on('change', function(item,x) {
+           console.log('item in produse on change', item,self.producator.get('displayedValue'));
+        if (item) {
+          self.grid.set('collection', self.cfg.Comanda.filter({producator:self.producator.get('displayedValue')}))
 
-        }
-
+        } 
       });
 
       // define columns
@@ -76,12 +82,39 @@ define([
             style: "width: 100%;"
           }
         },
+         {
+          field: "lastFurnizor",
+          label: "Furnizor",
+          className: "left",
+          editOnClick: false, //editOn: "click",
+          editorArgs: {
+            style: "width: 100%;"
+          }
+        },
+         {
+          field: "lastAchDiscount",
+          label: "%Ach",
+          className: "left",
+          editorArgs: {
+            style: "width: 100%;"
+          }
+        },
+        {
+          field: "lastAchPretFinal",
+          label: "PretAch",
+          className: "left",
+          formatter: dgrid.cell.formatter.n2,
+            editorArgs: {
+            style: "width: 100%;"
+          }
+        },
         {
           field: "lastPrice",
           label: "Pret",
           className: "right",
           editOnClick: true, //editOn: "click",
           autoSave: true,
+          formatter: dgrid.cell.formatter.n2,
           editorArgs: {
             selectOnClick: true,
             pattern: '[0-9]+(\.[0-9]{1,2})?',
@@ -107,6 +140,7 @@ define([
           field: "lastFinalPret",
           label: "PretRedus",
           className: "right",
+          formatter: dgrid.cell.formatter.n2,
           autoSave: true,
 
         },
@@ -193,8 +227,8 @@ define([
         }),
         columns: columns,
         sort: [{
-          property: "produs",
-          descending: false
+          property: "date",
+          descending: true
         }],
         selectionMode: "single",
         getBeforePut: false,
@@ -282,6 +316,10 @@ define([
           //self.grid.set('sort', '_id');
         });
       });
+      
+       this.btnRefresh.on('click', function() {
+         self.grid.set('collection', self.cfg.Comanda.filter({}).sort('date'));
+       })
 
       //***********-Define grid in Detalii necesar pe farmacii
 
@@ -330,7 +368,7 @@ define([
         }
       ];
       var gridFarmacii = new dgrid.OnDmdSymmaryResizeHide({
-        collection: self.cfg.Necesar.filter({}),
+        collection: self.cfg.Necesar.filter({produs:'none'}),
         columns: columnsFarmacii,
         sort: [{
           property: "produs",
@@ -386,7 +424,7 @@ define([
       ];
       
       var gridConditii = new dgrid.OnDmdSymmaryResizeHide({
-        collection: self.cfg.Conditii.filter({}),
+        collection: self.cfg.Conditii.filter({produs:'none'}),
         columns: columnsConditii,
         sort: [{
           property: "produs",

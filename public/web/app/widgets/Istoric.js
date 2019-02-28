@@ -6,6 +6,7 @@ define([
   "dijit/layout/BorderContainer",
   "dojo/text!./templates/Istoric.html",
   "dstore/RequestMemory",
+  "dstore/Memory",
   "dstore/legacy/DstoreAdapter",
   "util/dstore",
   "util/dgrid",
@@ -15,7 +16,7 @@ define([
   "dijit/form/Textarea",
   "put-selector/put"
 ], function(declare, topic, _TemplatedMixin, _WidgetsInTemplateMixin, BorderContainer,
-  template, RequestMemory, DstoreAdapter, dstore, dgrid, dateFormat, dateParse,
+  template, RequestMemory, Memory, DstoreAdapter, dstore, dgrid, dateFormat, dateParse,
   ValidationTextBox, Textarea, put
 ) {
   return declare([
@@ -33,7 +34,9 @@ define([
         pl: self.cfg.user.pl
       };
       console.log('produs: ', produs);
-      var  produsSelected = {produs:"none"};
+      var produsSelected = {
+        produs: "none"
+      };
 
       // define form input events 
       this.produse.set('store', new DstoreAdapter(self.cfg.Produse));
@@ -41,16 +44,36 @@ define([
       this.producator.set('store', new DstoreAdapter(self.cfg.Producatori));
       this.distribuitor.set('store', new DstoreAdapter(self.cfg.Furnizori));
       this.distribuitor.set('value', 4);
-      
-     
 
-      this.produse.on('change', function(item) {
+      this.distribuitor.on('change', function(item) {
+        console.log('item on change distrib', item, self.distribuitor.get('displayedValue'))
         if (item) {
-
-        } else {
+          console.log('item in produse on change', item);
+          self.grid.set('collection', self.cfg.Istoric.filter({
+            furnizor: self.distribuitor.get('displayedValue')
+          }))
 
         }
+      });
 
+      this.produse.on('change', function(item) {
+        console.log('item in produse on change', item, self.produse.get('displayedValue'));
+        if (item) {
+          console.log('item in produse on change', item);
+          self.grid.set('collection', self.cfg.Istoric.filter({
+            produs: self.produse.get('displayedValue')
+          }))
+
+        }
+      });
+      this.producator.on('change', function(item, x) {
+        console.log('item in produse on change', item, self.producator.get('displayedValue'));
+        if (item) {
+          self.grid.set('collection', self.cfg.Istoric.filter({
+            producator: self.producator.get('displayedValue')
+          }))
+
+        }
       });
 
       // define columns
@@ -58,7 +81,6 @@ define([
           field: "produs",
           label: "Produs",
           className: "left",
-          editOnClick: false, //editOn: "click",
           editorArgs: {
             style: "width: 100%;"
           }
@@ -67,7 +89,14 @@ define([
           field: "producator",
           label: "Producator",
           className: "left",
-          editOnClick: false, //editOn: "click",
+          editorArgs: {
+            style: "width: 100%;"
+          }
+        },
+        {
+          field: "furnizor",
+          label: "Furnizor",
+          className: "left",
           editorArgs: {
             style: "width: 100%;"
           }
@@ -76,73 +105,74 @@ define([
           field: "lastPrice",
           label: "Pret",
           className: "right",
-          editOnClick: true, //editOn: "click",
-         
+          formatter: dgrid.cell.formatter.n2,
           editorArgs: {
-            
+
             pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-         
+
         },
         {
           field: "lastDiscount",
           label: "Discount",
           className: "right",
-         
-         
+          formatter: dgrid.cell.formatter.percent,
           editorArgs: {
-            
             pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-          
+
         },
 
         {
           field: "lastFinalPret",
           label: "PretRedus",
           className: "right",
-          
-
+          formatter: dgrid.cell.formatter.n2,
         },
         {
           field: "cantitate",
           label: "Necesar",
           className: "right",
-          
-          editOnClick: false, //editOn: "click",
           editorArgs: {
-            
             pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-          
+
         },
         {
           field: "comanda",
           label: "Comanda",
           className: "right",
-          
-          editOnClick: false, //editOn: "click",
           editorArgs: {
-            
             pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
           },
-          
+
+        },
+        {
+          field: "date",
+          label: "Data",
+          className: "right",
+          get: function(obj, cell) {
+            console.log('OBJ', obj, cell);
+            return dateFormat(new Date(obj.date), "dd.MM.yyyy");
+          },
+          editorArgs: {
+            pattern: '[0-9]+(\.[0-9]{1,2})?',
+            style: "width: 100%;"
+          },
+
         },
         {
           field: "observatii",
           label: "Observatii",
-          
           className: "left",
-          editOnClick: true, //editOn: "click",
           editorArgs: {
-            
             style: "width: 100%;"
           },
-         
+
         },
         //         {
         //           field: "oferta",
@@ -187,8 +217,8 @@ define([
         collection: self.cfg.Istoric,
         columns: columns,
         sort: [{
-          property: "produs",
-          descending: false
+          property: "date",
+          descending: true
         }],
         selectionMode: "single",
         getBeforePut: false,
@@ -219,14 +249,30 @@ define([
         }
 
       })
-      
-      grid.on('dgrid-select', function(selectedProd){
-        console.log ( 'selected prod este :', selectedProd.rows[0].data);
+
+      grid.on('dgrid-select', function(selectedProd) {
+        console.log('selected prod este :', selectedProd.rows[0].data.detalii);
         produsSelected = selectedProd.rows[0].data.produs;
         console.log(produsSelected);
-        console.log("self.cfg.istoric", self.cfg.Istoric);
-        self.gridfarmacii.set('collection', self.cfg.Necesar.filter({produs:produsSelected}))
+        //var selectedProdArray = [{pl:'PL1', cantitate:20},{pl:'PL2', cantitate:40}];
+         var selectedProdArray =selectedProd.rows[0].data.detalii;
+//         selectedProd.rows[0].data.detalii.forEach(function(productsArray) {
+//           selectedProdArray.push(productsArray); 
+//         })
+        
+        
+        
+        
+        
+        
+        
+        console.log("ARRAY", selectedProdArray);
+        self.gridfarmacii.set('collection', new Memory({
+          data: selectedProdArray,
+          idProperty: "pl"
+        }))
       });
+
       grid.on('.field-comandat button.comandat:click', function(evt) {
         var row = grid.row(evt).data;
         delete row._id;
@@ -250,8 +296,12 @@ define([
         });
       });
 
-      //***********-Define grid in Conditii comerciale
-      
+      this.btnRefresh.on('click', function() {
+        self.grid.set('collection', self.cfg.Istoric.filter({}).sort('date'));
+      })
+
+      //***********-Define grid in Farmacii details
+
       var columnsFarmacii = [{
           field: "pl",
           label: "Farmacia",
@@ -285,12 +335,14 @@ define([
           },
         }
       ]
- var gridFarmacii = new dgrid.OnDmdSymmaryResizeHide({
-        collection: self.cfg.Necesar,
+      var gridFarmacii = new dgrid.OnDmdSymmaryResizeHide({
+        collection: self.cfg.Necesar.filter({
+          produs: 'none'
+        }),
         columns: columnsFarmacii,
         sort: [{
-          property: "produs",
-          descending: false
+          property: "date",
+          descending: true
         }],
         selectionMode: "single",
         getBeforePut: false,
@@ -303,7 +355,7 @@ define([
         rowsPerPage: 20,
         pageSizeOptions: [10, 20]
       }, this.gridfarmacii);
-this.gridfarmacii = gridFarmacii;
+      this.gridfarmacii = gridFarmacii;
 
 
       self.producator.subscribe("/tournaments", function(route) {
