@@ -124,7 +124,7 @@ define([
         },
         {
           field: "lastDiscount",
-          label: "Discount",
+          label: "%",
           className: "right",
           autoSave: true,
           editOnClick: true, //editOn: "click",
@@ -311,9 +311,8 @@ define([
       grid.on('.field-delete button.remove:click', function(evt) {
         var row = grid.row(evt).data;
         console.log('row', row);
-        //row.deleted = 1;
         grid.collection.remove(row._id).then(function(item) {
-          //self.grid.set('sort', '_id');
+         self.cfg.NecesarRemove.remove(row.idnecesar);
         });
       });
       
@@ -326,43 +325,43 @@ define([
       var columnsFarmacii = [{
           field: "pl",
           label: "Farmacia",
-          autoSave: true,
+          //autoSave: true,
           className: "left",
-          editOnClick: true, //editOn: "click",
+         // editOnClick: true, //editOn: "click",
           editorArgs: {
-            selectOnClick: true,
+            //selectOnClick: true,
             style: "width: 100%;"
           },
         },
           {
           field: "produs",
-          label: "Produse",
-          autoSave: true,
+          label: "Produs",
+          //autoSave: true,
           className: "left",
-          editOnClick: true, //editOn: "click",
+          //editOnClick: true, //editOn: "click",
           editorArgs: {
-            selectOnClick: true,
+            //selectOnClick: true,
             style: "width: 100%;"
           }
         }, 
         {
           field: "cantitate",
-          label: "Cantitate",
-          autoSave: true,
-          className: "left",
-          editOnClick: true, //editOn: "click",
+          label: "Necesar",
+          //autoSave: true,
+          className: "right",
+          //editOnClick: true, //editOn: "click",
           editorArgs: {
-            selectOnClick: true,
+            //selectOnClick: true,
             style: "width: 100%;"
           }
         }, {
           field: "observatii",
           label: "Observatii",
-          autoSave: true,
+          //autoSave: true,
           className: "left",
-          editOnClick: true, //editOn: "click",
+          //editOnClick: true, //editOn: "click",
           editorArgs: {
-            selectOnClick: true,
+            //selectOnClick: true,
             style: "width: 100%;"
           },
         }

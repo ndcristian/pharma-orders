@@ -200,15 +200,7 @@ define([
             return put("button.remove[title=Șterge] i.fa.fa-trash-o< ");
           }
         },
-        {
-          field: "comandat",
-          label: "Comandat",
-          sortable: false,
-          className: "center",
-          renderCell: function(obj, data, cell) {
-            return put("button.comandat[title=Șterge] i.fa.fa-check-square< ");
-          }
-        }
+        
       ];
 
       //Define grid

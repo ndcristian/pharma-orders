@@ -15,7 +15,7 @@
   border: 1px solid #DDD;
 }
 .field-lastFurnizor {
-  width: 15%;
+  width: 10%;
 }
 .field-lastAchDiscount {
   width: 5%;
@@ -30,7 +30,7 @@
   width: 5%;
 }
 .field-cantitate {
-  width: 5%;
+  width: 6%;
 }
 .field-lastFinalPret {
   width: 6%;
@@ -48,3 +48,10 @@
 .Farmacii {
   height:100%;
 }
+
+.field-pl {
+  width: 20%;
+}
+
+
+

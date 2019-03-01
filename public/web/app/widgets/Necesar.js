@@ -158,24 +158,28 @@ define([
         },
         {
           field: "cantitate",
-          label: "Cantitate",
+          label: "Necesar",
           className: "right",
+          autoSave: true,
           editOnClick: false, //editOn: "click",
           editorArgs: {
+            selectOnClick: true,
+            pattern: '[0-9]+(\.[0-9]{1,2})?',
             style: "width: 100%;"
-          }
+          },
+          editor: ValidationTextBox
         },
         {
           field: "observatii",
           label: "Observatii",
-          autoSave: true,
+          //autoSave: true,
           className: "left",
-          editOnClick: true, //editOn: "click",
+         // editOnClick: true, //editOn: "click",
           editorArgs: {
-            selectOnClick: true,
+            //selectOnClick: true,
             style: "width: 100%;"
           },
-          editor: Textarea
+          //editor: Textarea
         },
         //         {
         //           field: "oferta",
@@ -194,24 +198,16 @@ define([
         //             }
         //           }
         //         },
-        {
-          field: "delete",
-          label: "Delete",
-          sortable: false,
-          className: "center",
-          renderCell: function(obj, data, cell) {
-            return put("button.remove[title=Șterge] i.fa.fa-trash-o< ");
-          }
-        },
-        {
-          field: "update",
-          label: "Update",
-          sortable: false,
-          className: "center",
-          renderCell: function(obj, data, cell) {
-            return put("button.update[title=Șterge] i.fa.fa-refresh< ");
-          }
-        }
+//         {
+//           field: "delete",
+//           label: "Delete",
+//           sortable: false,
+//           className: "center",
+//           renderCell: function(obj, data, cell) {
+//             return put("button.remove[title=Șterge] i.fa.fa-trash-o< ");
+//           }
+//         },
+
       ];
 
       //Define grid
@@ -239,21 +235,35 @@ define([
       }, this.gridplace);
       this.grid = grid;
 
-      grid.on('.field-update button.update:click', function(evt) {
-        var row = grid.row(evt).data;
-        console.log("clickUpdate", row);
-        grid.collection.put(row).then(function(item) {
-
-        });
-      });
-      grid.on('.field-delete button.remove:click', function(evt) {
-        var row = grid.row(evt).data;
-        console.log('row', row);
-        //row.deleted = 1;
-        grid.collection.remove(row._id).then(function(item) {
-          //self.grid.set('sort', '_id');
-        });
-      });
+      
+      
+      
+       grid.on('dgrid-datachange', function(event) {
+         var row = event.cell.row.data;
+            self.cfg.Comanda.filter({produs:row.produs}).fetch().then(function(produsInComanda){
+            console.log('inainte de scadere',produsInComanda[0], event);
+            let updatedCant = (+event.value) - (+event.oldValue);  
+            produsInComanda[0].cantitate = (+produsInComanda[0].cantitate) + updatedCant;
+            console.log(produsInComanda);
+            self.cfg.Comanda.add(produsInComanda[0]).then(alert('Produs modificat in comanda'))
+          })
+       })
+     
+//       grid.on('.field-delete button.remove:click', function(evt) {
+//         var row = grid.row(evt).data;
+//         console.log('row', row);
+//         //row.deleted = 1;
+//         grid.collection.remove(row._id).then(function(item) {
+//           console.log('Item removed fron necesar', item);
+//           self.cfg.Comanda.filter({produs:row.produs}).fetch().then(function(produsInComanda){
+//             console.log(produsInComanda);
+//             produsInComanda[0].cantitate = +produsInComanda.cantitate- (+row.cantitate);
+//             console.log(produsInComanda);
+//             self.cfg.Comanda.add(produsInComanda[0]).then(alert('Produs modificat in comanda'))
+//           })
+//         });
+//       });
+      
       this.btnSave.on('click', function() {
         console.log(self.filterForm.validate());
         if (Object.keys(produs).length > 0 && self.filterForm.validate() && !produsInOferta) {

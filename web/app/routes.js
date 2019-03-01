@@ -7,8 +7,7 @@ var route = require('./models/route_models'); // Project configuration
 var crud = require('./models/crud_models'); //used for GET/INSERT/UPDATE/DELETE
 var ObjectID = require('mongodb').ObjectID;
 var controls = require('./controllers/controls'); //Other user functions
-//var database = require("../../routes/models/appconfig").database;
-var database = 'pharma';
+var database = require("../../routes/models/appconfig").database;
 var routes = controls.project(route.model.routes);
 
 
@@ -124,8 +123,13 @@ router.delete("/necesar_clean/:_id", ensureAuthenticated, function(req, res) {
   crud.models.get(database, {main:'necesar'}, {
     _id: _id
   }, {}, function(err, produse) {
+    //test if produs[0] exist
+    let produsToDelete = 'none';
+    if (produse.length>0){
+      produsToDelete = produse[0].produs;
+    }
     crud.models.deleteMany(database, {main:'necesar'}, {
-      produs: produse[0].produs
+      produs: produsToDelete
     }, function(err, items) {
       res.setHeader('Content-Type', 'application/json');
       res.send(items);
