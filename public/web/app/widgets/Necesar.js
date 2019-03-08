@@ -268,6 +268,7 @@ define([
         console.log(self.filterForm.validate());
         if (Object.keys(produs).length > 0 && self.filterForm.validate() && !produsInOferta) {
           produs.cantitate = self.cantitate.value;
+          produs.observatii = self.observatii.value;
           totalCantItem = totalCantItem + (+self.cantitate.value);
           console.log('produs inserted: ', produs, "totalCantItem", totalCantItem);
           console.log('Object Key produs', Object.keys(produs));
@@ -295,6 +296,7 @@ define([
               produsInComanda.lastDiscount = "";
               produsInComanda.lastFinalPret = "";
               produsInComanda.idnecesar = item._id;
+            produsInComanda.observatii = "obs";
 
 
               self.cfg.Comanda.filter({
@@ -303,8 +305,10 @@ define([
 
                 if (items.length > 0) {
                   items[0].cantitate = totalCantItem;
+                  console.log('items before push', items);
+                  items[0].detalii.push({pl:self.cfg.user.pl,cantitate:self.cantitate.value })
                   produsInComanda = items[0];
-
+                  console.log('items after push', produsInComanda)
                 }
                 self.cfg.Comanda.add(produsInComanda).then(function(insertedInComanda) {
                   totalCantItem = 0;

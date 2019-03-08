@@ -416,6 +416,7 @@ define([
           field: "lastFinalPret",
           label: "PretFinal",
           className: "left",
+          formatter: dgrid.cell.formatter.n2,
           editorArgs: {
             style: "width: 100%;"
           },
